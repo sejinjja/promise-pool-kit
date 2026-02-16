@@ -1,0 +1,61 @@
+{
+  "name": "@sejinjja/promise-pool-kit",
+  "version": "0.1.0",
+  "description": "A tiny TypeScript toolkit for retry, timeout, and controlled concurrency in async workloads.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run test && npm run build",
+    "prepublishOnly": "npm run check"
+  },
+  "keywords": [
+    "promise",
+    "pool",
+    "concurrency",
+    "retry",
+    "timeout",
+    "async",
+    "typescript"
+  ],
+  "author": "sejinjja",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sejinjja/promise-pool-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sejinjja/promise-pool-kit/issues"
+  },
+  "homepage": "https://github.com/sejinjja/promise-pool-kit#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
