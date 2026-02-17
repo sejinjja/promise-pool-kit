@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added release-script safety check to fail when files outside `package.json`, `package-lock.json`, and `CHANGELOG.md` change during release prep.
 ## 0.1.21 - 2026-02-17
 
 - Enforced `workflow_dispatch` publish workflow to dry-run only (fails when `dry_run=false`).

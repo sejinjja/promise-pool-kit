@@ -176,6 +176,40 @@ function writeChangelogUpdate(plan) {
   );
 }
 
+function parseChangedPaths(statusOutput) {
+  if (!statusOutput) {
+    return [];
+  }
+  return statusOutput
+    .split(/\r?\n/)
+    .filter((line) => line.trim().length > 0)
+    .map((line) => {
+      const entry = line.slice(3).trim();
+      if (entry.includes(" -> ")) {
+        const moved = entry.split(" -> ").pop();
+        return moved ? moved.trim() : entry;
+      }
+      return entry;
+    });
+}
+
+function ensureOnlyReleaseFilesChanged(statusOutput) {
+  const allowed = new Set(["package.json", "package-lock.json", "CHANGELOG.md"]);
+  const changedPaths = parseChangedPaths(statusOutput);
+
+  const unexpected = changedPaths.filter((path) => !allowed.has(path));
+  if (unexpected.length > 0) {
+    throw new Error(
+      `Unexpected file changes during release: ${unexpected.join(", ")}. Commit/stash them first.`
+    );
+  }
+
+  const missing = [...allowed].filter((path) => !changedPaths.includes(path));
+  if (missing.length > 0) {
+    throw new Error(`Expected release files were not changed: ${missing.join(", ")}.`);
+  }
+}
+
 function main() {
   const args = process.argv.slice(2);
   if (args.includes("-h") || args.includes("--help")) {
@@ -255,6 +289,9 @@ function main() {
   if (!noCheck) {
     runInherit("npm run check");
   }
+
+  const statusAfterCheck = run("git status --porcelain");
+  ensureOnlyReleaseFilesChanged(statusAfterCheck);
 
   runInherit("git add package.json package-lock.json CHANGELOG.md");
   runInherit(`git commit -m "chore(release): v${nextVersion}"`);
