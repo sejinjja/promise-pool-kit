@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added a safety guard in `scripts/release.mjs` to allow `--push` only on the `main` branch.
+
 ## 0.1.6 - 2026-02-17
 
 - Added `scripts/release.mjs` to automate version bump, changelog promotion, checks, commit, and tag creation.

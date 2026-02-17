@@ -127,6 +127,13 @@ function main() {
     throw new Error("Working tree is not clean. Commit or stash changes before release.");
   }
 
+  if (push) {
+    const branch = run("git branch --show-current");
+    if (branch !== "main") {
+      throw new Error(`--push is only allowed from main branch. Current branch: ${branch}`);
+    }
+  }
+
   const pkg = JSON.parse(readFileSync("package.json", "utf8"));
   const currentVersion = pkg.version;
   const nextVersion =

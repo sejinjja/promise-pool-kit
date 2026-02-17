@@ -136,6 +136,8 @@ npm run release:patch
 node scripts/release.mjs patch --push
 ```
 
+`--push` mode is guarded to run only on the `main` branch.
+
 ## License
 
 MIT
