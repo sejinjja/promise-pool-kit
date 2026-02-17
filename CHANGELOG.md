@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.51 - 2026-02-17
+
 - Expanded `NPM_TOKEN` placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
 
 ## 0.1.50 - 2026-02-17
