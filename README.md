@@ -133,6 +133,7 @@ Tag-based release notes are populated from the matching `CHANGELOG.md` version s
 Tag-based npm publish uses provenance attestations (`npm publish --provenance`).
 Tag workflow reruns are idempotent: if that exact version is already on npm, publish is skipped.
 Tag workflow also attaches the built npm tarball to the corresponding GitHub Release assets.
+CI workflow cancels superseded runs on the same ref, while publish workflow serializes runs per ref.
 
 For local release preparation:
 
