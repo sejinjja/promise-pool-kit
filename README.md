@@ -128,6 +128,7 @@ npm access list packages <your-npm-id>
 For automated tag-based publishing via GitHub Actions, set repository secret `NPM_TOKEN` (granular token with publish permission).
 Tag-based publish also creates a GitHub release for the same tag automatically.
 Manual `workflow_dispatch` runs are dry-run only; publishing happens only on `v*.*.*` tag pushes.
+Tag-based publish requires the tag commit to be included in `origin/main` history.
 Tag-based publish requires a matching version entry in `CHANGELOG.md` and uploads the npm tarball as a workflow artifact.
 Uploaded tarball artifact names are run-based and fail fast if the tarball file is missing.
 Tag-based release notes are populated from the matching `CHANGELOG.md` version section.

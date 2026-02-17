@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added a publish guard to require tag commits be reachable from `origin/main` history.
 ## 0.1.24 - 2026-02-17
 
 - Extended publish smoke verification to test both CommonJS (`require`) and ESM (`import`) package entry points.
