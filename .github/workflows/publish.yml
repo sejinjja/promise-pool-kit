@@ -157,7 +157,7 @@ jobs:
               exit 0
             fi
 
-            if echo "$AUTH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|Unable to authenticate|authentication token"; then
+            if echo "$AUTH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|EOTP|Unable to authenticate|authentication token|one-time pass|two-factor|2fa"; then
               echo "NPM_TOKEN authentication failed."
               echo "$AUTH_OUTPUT"
               exit 1
@@ -207,7 +207,7 @@ jobs:
               exit 0
             fi
 
-            if echo "$PUBLISH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|E403|forbidden"; then
+            if echo "$PUBLISH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|E403|EOTP|forbidden|one-time pass|two-factor|2fa"; then
               echo "$PUBLISH_OUTPUT"
               exit 1
             fi

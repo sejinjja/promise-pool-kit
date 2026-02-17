@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Expanded npm auth/publish fatal error detection to fail fast on OTP/2FA-related npm responses.
+
 ## 0.1.40 - 2026-02-17
 
 - Centralized publish workflow npm registry configuration via job-level `NPM_REGISTRY_URL` environment variable.
