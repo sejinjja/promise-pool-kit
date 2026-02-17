@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Hardened secret-alias linting to block deprecated publish-secret indirection names.
+
 ## 0.1.72 - 2026-02-17
 
 - Internal release-process maintenance update.

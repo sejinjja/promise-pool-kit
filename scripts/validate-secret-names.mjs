@@ -22,6 +22,13 @@ const FORBIDDEN_PATTERNS = [
       `\\b${escapeRegExp(fromCodes([78, 79, 68, 69, 95, 65, 85, 84, 72, 95, 84, 79, 75, 69, 78]))}\\b`,
       "gi"
     )
+  },
+  {
+    label: "deprecated indirection alias",
+    regex: new RegExp(
+      `\\b${escapeRegExp(fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 83, 69, 67, 82, 69, 84, 95, 78, 65, 77, 69]))}\\b`,
+      "gi"
+    )
   }
 ];
 
@@ -84,7 +91,7 @@ if (violations.length > 0) {
       `${violation.file}:${violation.line} contains forbidden secret alias '${violation.label}'.`
     );
   }
-  fail("remove legacy secret aliases from repository files");
+  fail("remove forbidden secret aliases from repository files");
 }
 
 console.log("SECRET naming validation passed.");
