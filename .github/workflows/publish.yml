@@ -145,6 +145,12 @@ jobs:
             echo "NPM_TOKEN appears to include surrounding quotes."
             exit 1
           fi
+          case "${NODE_AUTH_TOKEN}" in
+            "NPM_TOKEN" | "\${NPM_TOKEN}" | "YOUR_NPM_TOKEN" | "your-npm-token" | "changeme")
+              echo "NPM_TOKEN appears to be a placeholder value."
+              exit 1
+              ;;
+          esac
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

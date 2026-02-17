@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `NPM_TOKEN` placeholder-value guard to fail fast when common dummy strings are configured.
+
 ## 0.1.45 - 2026-02-17
 
 - Added `NPM_TOKEN` guard to fail when the secret appears to include surrounding quote characters.
