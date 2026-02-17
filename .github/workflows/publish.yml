@@ -4,6 +4,13 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run packaging check only (no npm publish)"
+        required: true
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -26,6 +33,7 @@ jobs:
         run: npm ci
 
       - name: Verify tag and package version match
+        if: github.event_name == 'push'
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"
           PKG_VERSION="$(node -p "require('./package.json').version")"
@@ -37,7 +45,12 @@ jobs:
       - name: Run full checks
         run: npm run check
 
+      - name: Pack (dry run)
+        if: github.event_name == 'workflow_dispatch'
+        run: npm pack --dry-run
+
       - name: Publish to npm
+        if: github.event_name == 'push'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
