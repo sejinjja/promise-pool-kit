@@ -152,6 +152,10 @@ jobs:
             echo "NPM_TOKEN appears to be an unresolved template expression."
             exit 1
           fi
+          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qiE '(^//.*:_authtoken=|_authtoken=|registry\.npmjs\.org/)'; then
+            echo "NPM_TOKEN appears to include an .npmrc auth config line; provide token value only."
+            exit 1
+          fi
           TOKEN_LOWER="$(printf "%s" "${NODE_AUTH_TOKEN}" | tr '[:upper:]' '[:lower:]')"
           if printf "%s" "${TOKEN_LOWER}" | grep -qE '^(ghp_|github_pat_|glpat-|xox[aboprsv]-|ya29\.)'; then
             echo "NPM_TOKEN appears to be a non-npm service token."

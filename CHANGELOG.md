@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `NPM_TOKEN` validation to reject `.npmrc` auth-config strings (for example `_authToken=` or `registry.npmjs.org/...`) and require raw token value.
+
 ## 0.1.52 - 2026-02-17
 
 - Fixed main-history verification fetch to use explicit `github.token` auth header, preventing anonymous `git fetch` failures in publish runs.
