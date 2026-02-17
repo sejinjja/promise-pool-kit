@@ -69,15 +69,36 @@ jobs:
       - name: Verify tag commit is in main history
         if: github.event_name == 'push'
         run: |
-          STATUS="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${GITHUB_SHA}...main" --jq '.status')"
-          case "$STATUS" in
-            "ahead" | "identical")
-              ;;
-            *)
-              echo "Tag commit ${GITHUB_SHA} is not in main history (compare status: ${STATUS})."
-              exit 1
-              ;;
-          esac
+          for i in {1..3}; do
+            set +e
+            STATUS_OUTPUT="$(gh api "repos/${GITHUB_REPOSITORY}/compare/${GITHUB_SHA}...main" --jq '.status' 2>&1)"
+            STATUS_CODE=$?
+            set -e
+
+            if [ $STATUS_CODE -eq 0 ]; then
+              STATUS="$(printf "%s" "${STATUS_OUTPUT}" | tr -d '[:space:]')"
+              case "${STATUS}" in
+                "ahead" | "identical")
+                  exit 0
+                  ;;
+                *)
+                  echo "Tag commit ${GITHUB_SHA} is not in main history (compare status: ${STATUS})."
+                  exit 1
+                  ;;
+              esac
+            fi
+
+            if [ $i -lt 3 ]; then
+              echo "Transient compare API failure ($i/3), retrying..."
+              echo "${STATUS_OUTPUT}"
+              sleep 2
+              continue
+            fi
+
+            echo "Unable to verify tag ancestry after retries."
+            echo "${STATUS_OUTPUT}"
+            exit 1
+          done
         env:
           GH_TOKEN: ${{ github.token }}
 

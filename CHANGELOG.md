@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added retry handling to GitHub compare API ancestry checks in publish workflow to reduce false failures from transient API errors.
+
 ## 0.1.63 - 2026-02-17
 
 - Switched tag-history verification to GitHub compare API checks to avoid git remote credential-helper dependency in publish runs.
