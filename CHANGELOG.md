@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- Updated publish workflow to fail fast when `NPM_TOKEN` secret is missing.
+- Added automatic GitHub release creation on successful tag-based publish.
+
 ## 0.1.2 - 2026-02-17
 
 - Added GitHub Actions CI workflow to run `npm run check` on pull requests and `main` pushes.
