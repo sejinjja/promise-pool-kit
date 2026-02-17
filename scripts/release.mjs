@@ -26,6 +26,14 @@ function run(cmd, options = {}) {
   }).trim();
 }
 
+function runRaw(cmd, options = {}) {
+  return execSync(cmd, {
+    encoding: "utf8",
+    stdio: "pipe",
+    ...options
+  });
+}
+
 function runInherit(cmd) {
   execSync(cmd, { stdio: "inherit" });
 }
@@ -226,7 +234,7 @@ function main() {
     throw new Error(`Unsupported release target: ${target}`);
   }
 
-  const dirty = run("git status --porcelain");
+  const dirty = runRaw("git status --porcelain").trimEnd();
   if (dirty.length > 0 && !dryRun) {
     throw new Error("Working tree is not clean. Commit or stash changes before release.");
   }
@@ -290,7 +298,7 @@ function main() {
     runInherit("npm run check");
   }
 
-  const statusAfterCheck = run("git status --porcelain");
+  const statusAfterCheck = runRaw("git status --porcelain").trimEnd();
   ensureOnlyReleaseFilesChanged(statusAfterCheck);
 
   runInherit("git add package.json package-lock.json CHANGELOG.md");

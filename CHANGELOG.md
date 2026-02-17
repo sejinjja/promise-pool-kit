@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.22 - 2026-02-17
+
 - Added release-script safety check to fail when files outside `package.json`, `package-lock.json`, and `CHANGELOG.md` change during release prep.
+- Fixed release-script status parsing so the first changed file is not truncated on `git status --porcelain` output.
+
 ## 0.1.21 - 2026-02-17
 
 - Enforced `workflow_dispatch` publish workflow to dry-run only (fails when `dry_run=false`).
