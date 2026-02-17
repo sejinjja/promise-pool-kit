@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Enforced `workflow_dispatch` publish workflow to dry-run only (fails when `dry_run=false`).
 ## 0.1.20 - 2026-02-17
 
 - Added workflow job timeouts to fail fast on stuck runs (`CI`: 15m, `Publish`: 20m).

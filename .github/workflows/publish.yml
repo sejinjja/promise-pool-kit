@@ -38,6 +38,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate manual run mode
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [ "${{ inputs.dry_run }}" != "true" ]; then
+            echo "workflow_dispatch supports dry-run only. Use tag push to publish."
+            exit 1
+          fi
+
       - name: Verify tag and package version match
         if: github.event_name == 'push'
         run: |
