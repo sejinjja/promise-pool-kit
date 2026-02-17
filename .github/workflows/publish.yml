@@ -99,6 +99,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Verify npm token can authenticate
+        if: github.event_name == 'push'
+        run: |
+          if ! npm whoami --registry=https://registry.npmjs.org > /dev/null 2>&1; then
+            echo "NPM_TOKEN authentication failed."
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Detect whether this version is already published
         if: github.event_name == 'push'
         id: npm_state
