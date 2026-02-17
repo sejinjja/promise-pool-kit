@@ -191,19 +191,21 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          echo "::add-mask::${PUBLISH_CREDENTIAL}"
+          CREDENTIAL="${PUBLISH_CREDENTIAL}"
+          echo "::add-mask::${CREDENTIAL}"
+          unset PUBLISH_CREDENTIAL
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
           REGISTRY_HOST="${REGISTRY_HOST%/}"
           TMP_NPMRC="$(mktemp)"
           trap 'rm -f "$TMP_NPMRC"' EXIT
-          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${PUBLISH_CREDENTIAL}" > "$TMP_NPMRC"
+          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${CREDENTIAL}" > "$TMP_NPMRC"
+          unset CREDENTIAL
           chmod 600 "$TMP_NPMRC"
-          export NPM_CONFIG_USERCONFIG="$TMP_NPMRC"
 
           for i in {1..3}; do
             set +e
-            AUTH_OUTPUT="$(npm whoami --registry="${NPM_REGISTRY_URL}" 2>&1)"
+            AUTH_OUTPUT="$(npm --userconfig="${TMP_NPMRC}" whoami --registry="${NPM_REGISTRY_URL}" 2>&1)"
             STATUS=$?
             set -e
             SAFE_AUTH_OUTPUT="$(sanitize_npm_output "$AUTH_OUTPUT")"
@@ -236,15 +238,17 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          echo "::add-mask::${PUBLISH_CREDENTIAL}"
+          CREDENTIAL="${PUBLISH_CREDENTIAL}"
+          echo "::add-mask::${CREDENTIAL}"
+          unset PUBLISH_CREDENTIAL
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
           REGISTRY_HOST="${REGISTRY_HOST%/}"
           TMP_NPMRC="$(mktemp)"
           trap 'rm -f "$TMP_NPMRC"' EXIT
-          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${PUBLISH_CREDENTIAL}" > "$TMP_NPMRC"
+          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${CREDENTIAL}" > "$TMP_NPMRC"
+          unset CREDENTIAL
           chmod 600 "$TMP_NPMRC"
-          export NPM_CONFIG_USERCONFIG="$TMP_NPMRC"
 
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
@@ -264,7 +268,7 @@ jobs:
 
           for i in {1..3}; do
             set +e
-            PUBLISH_OUTPUT="$(npm publish --registry="${NPM_REGISTRY_URL}" --access public --provenance 2>&1)"
+            PUBLISH_OUTPUT="$(npm --userconfig="${TMP_NPMRC}" publish --registry="${NPM_REGISTRY_URL}" --access public --provenance 2>&1)"
             STATUS=$?
             set -e
             SAFE_PUBLISH_OUTPUT="$(sanitize_npm_output "$PUBLISH_OUTPUT")"
