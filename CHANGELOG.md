@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added fail-fast handling for npm invalid-token errors (`EINVALIDNPMTOKEN`/`invalid token`) in auth and publish steps.
+
 ## 0.1.41 - 2026-02-17
 
 - Expanded npm auth/publish fatal error detection to fail fast on OTP/2FA-related npm responses.
