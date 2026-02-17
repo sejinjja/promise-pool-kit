@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.10 - 2026-02-17
+
 - Added `--dry-run` mode to `scripts/release.mjs` for non-mutating release previews.
 
 ## 0.1.9 - 2026-02-17
