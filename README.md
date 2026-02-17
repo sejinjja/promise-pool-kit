@@ -127,6 +127,15 @@ For automated tag-based publishing via GitHub Actions, set repository secret `NP
 Tag-based publish also creates a GitHub release for the same tag automatically.
 Tag-based publish requires a matching version entry in `CHANGELOG.md` and uploads the npm tarball as a workflow artifact.
 
+For local release preparation:
+
+```bash
+npm run release:patch
+# or: npm run release:minor / npm run release:major
+# add --push by running the script directly:
+node scripts/release.mjs patch --push
+```
+
 ## License
 
 MIT

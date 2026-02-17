@@ -26,6 +26,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run typecheck && npm run test && npm run build",
+    "release": "node scripts/release.mjs patch",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major",
+    "release:patch:push": "node scripts/release.mjs patch --push",
     "prepublishOnly": "npm run check"
   },
   "keywords": [
