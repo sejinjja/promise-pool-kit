@@ -148,6 +148,10 @@ jobs:
             echo "NPM_TOKEN appears to include surrounding quotes."
             exit 1
           fi
+          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^`+.*`+$'; then
+            echo "NPM_TOKEN appears to include markdown backticks."
+            exit 1
+          fi
           if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^\$\{\{[^}]+\}\}$'; then
             echo "NPM_TOKEN appears to be an unresolved template expression."
             exit 1

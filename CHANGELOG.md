@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `NPM_TOKEN` validation to reject markdown backtick-wrapped values and require raw token text.
+
 ## 0.1.53 - 2026-02-17
 
 - Added `NPM_TOKEN` validation to reject `.npmrc` auth-config strings (for example `_authToken=` or `registry.npmjs.org/...`) and require raw token value.
