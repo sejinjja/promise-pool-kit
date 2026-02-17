@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.78 - 2026-02-17
+
 - Enforced workflow-level policy so secret references are allowed only in the publish workflow.
 
 ## 0.1.77 - 2026-02-17
