@@ -4,165 +4,167 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Refined changelog wording to avoid deployment-method details in public release notes.
+
 ## 0.1.68 - 2026-02-17
 
-- Added retry handling to GitHub release creation/upload step in publish workflow to reduce transient API-auth/server flake failures.
+- Internal release-process maintenance update.
 
 ## 0.1.67 - 2026-02-17
 
-- Switched publish workflow to indirect secret lookup via `secrets[vars.PUBLISH_SECRET_NAME]` so the concrete publish-secret key is not embedded in repo workflow code.
+- Internal release-process maintenance update.
 
 ## 0.1.66 - 2026-02-17
 
-- Removed step-level credential env injection in publish workflow and switched to per-step local secret assignment to reduce env block exposure in logs.
+- Internal release-process maintenance update.
 
 ## 0.1.65 - 2026-02-17
 
-- Removed `setup-node` registry injection from publish workflow to minimize workflow-wide auth env/config side effects.
+- Internal release-process maintenance update.
 
 ## 0.1.64 - 2026-02-17
 
-- Added retry handling to GitHub compare API ancestry checks in publish workflow to reduce false failures from transient API errors.
+- Internal release-process maintenance update.
 
 ## 0.1.63 - 2026-02-17
 
-- Switched tag-history verification to GitHub compare API checks to avoid git remote credential-helper dependency in publish runs.
+- Internal release-process maintenance update.
 
 ## 0.1.62 - 2026-02-17
 
-- Fixed tag-history verification fetch to use authenticated `origin` remote from checkout credentials, avoiding intermittent credential prompts in publish runs.
+- Internal release-process maintenance update.
 
 ## 0.1.61 - 2026-02-17
 
-- Added secret-alias linting to `npm run check` to fail if legacy token environment aliases reappear in tracked files.
+- Internal release-process maintenance update.
 
 ## 0.1.60 - 2026-02-17
 
-- Minimized credential lifetime in publish/auth steps by unsetting the env secret after writing a temporary `.npmrc` and using `npm --userconfig` for authenticated commands.
+- Internal release-process maintenance update.
 
 ## 0.1.59 - 2026-02-17
 
-- Switched publish workflow npm auth to a generic credential secret with temporary `.npmrc` injection, removing explicit legacy auth-secret naming from workflow definitions.
+- Internal release-process maintenance update.
 
 ## 0.1.58 - 2026-02-17
 
-- Added npm auth/publish error-output redaction in publish workflow to scrub common credential-bearing patterns before logging.
+- Internal release-process maintenance update.
 
 ## 0.1.57 - 2026-02-17
 
-- Generalized publish-workflow validation/error wording from "token" to "credential" to reduce secret-type exposure in logs.
+- Internal release-process maintenance update.
 
 ## 0.1.56 - 2026-02-17
 
-- Replaced indirect publish-secret lookup with direct publish-credential secret binding to remove secret-name exposure through repository variables.
+- Internal release-process maintenance update.
 
 ## 0.1.55 - 2026-02-17
 
-- Removed explicit publish-secret key naming from workflow log messages and switched npm auth binding to indirect secret-name lookup.
+- Internal release-process maintenance update.
 
 ## 0.1.54 - 2026-02-17
 
-- Added publish-token validation to reject markdown backtick-wrapped values and require raw token text.
+- Internal release-process maintenance update.
 
 ## 0.1.53 - 2026-02-17
 
-- Added publish-token validation to reject `.npmrc` auth-config strings (for example `_authToken=` or `registry.npmjs.org/...`) and require raw token value.
+- Internal release-process maintenance update.
 
 ## 0.1.52 - 2026-02-17
 
-- Fixed main-history verification fetch to use explicit `github.token` auth header, preventing anonymous `git fetch` failures in publish runs.
+- Internal release-process maintenance update.
 
 ## 0.1.51 - 2026-02-17
 
-- Expanded publish-token placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
+- Internal release-process maintenance update.
 
 ## 0.1.50 - 2026-02-17
 
-- Added fast-fail detection for obvious non-npm token prefixes in publish-token values (for example `ghp_`, `github_pat_`, `glpat-`).
+- Internal release-process maintenance update.
 
 ## 0.1.49 - 2026-02-17
 
-- Extended publish-token placeholder detection to catch environment-reference literals like `$PUBLISH_TOKEN` and `%PUBLISH_TOKEN%`.
+- Internal release-process maintenance update.
 
 ## 0.1.48 - 2026-02-17
 
-- Hardened publish-token placeholder checks with case-insensitive matching and unresolved template-expression detection.
+- Internal release-process maintenance update.
 
 ## 0.1.47 - 2026-02-17
 
-- Added publish-token validation for masked/redacted placeholder values (for example `***`, `redacted`).
+- Internal release-process maintenance update.
 
 ## 0.1.46 - 2026-02-17
 
-- Added publish-token placeholder-value guard to fail fast when common dummy strings are configured.
+- Internal release-process maintenance update.
 
 ## 0.1.45 - 2026-02-17
 
-- Added publish-token guard to fail when the secret appears to include surrounding quote characters.
+- Internal release-process maintenance update.
 
 ## 0.1.44 - 2026-02-17
 
-- Added fail-fast handling for npm CIDR/IP-restriction auth errors (`EAUTHIP`, IP/CIDR denial messages) in auth and publish checks.
+- Internal release-process maintenance update.
 
 ## 0.1.43 - 2026-02-17
 
-- Treated npm `E403/forbidden` responses as immediate fatal errors in the token-auth verification step.
+- Internal release-process maintenance update.
 
 ## 0.1.42 - 2026-02-17
 
-- Added fail-fast handling for npm invalid-token errors (`EINVALIDNPMTOKEN`/`invalid token`) in auth and publish steps.
+- Internal release-process maintenance update.
 
 ## 0.1.41 - 2026-02-17
 
-- Expanded npm auth/publish fatal error detection to fail fast on OTP/2FA-related npm responses.
+- Internal release-process maintenance update.
 
 ## 0.1.40 - 2026-02-17
 
-- Centralized publish workflow npm registry configuration via job-level `NPM_REGISTRY_URL` environment variable.
+- Internal release-process maintenance update.
 
 ## 0.1.39 - 2026-02-17
 
-- Pinned npm registry URL explicitly for publish-state checks, publish, and smoke-install steps in the publish workflow.
+- Internal release-process maintenance update.
 
 ## 0.1.38 - 2026-02-17
 
-- Added short post-failure npm visibility polling in publish step to reduce false failures from registry propagation delays.
+- Internal release-process maintenance update.
 
 ## 0.1.37 - 2026-02-17
 
-- Reordered npm publish failure handling to check whether the target version is already visible before treating forbidden/auth errors as fatal.
+- Internal release-process maintenance update.
 
 ## 0.1.36 - 2026-02-17
 
-- Tightened publish-token validation to fail when whitespace/newline characters are present before npm auth/publish.
+- Internal release-process maintenance update.
 
 ## 0.1.35 - 2026-02-17
 
-- Added retry-aware npm publish step that distinguishes auth failures, retries transient errors, and treats already-visible target versions as success.
+- Internal release-process maintenance update.
 
 ## 0.1.34 - 2026-02-17
 
-- Updated npm token auth check to fail immediately on explicit auth errors and retry only transient failures.
+- Internal release-process maintenance update.
 
 ## 0.1.33 - 2026-02-17
 
-- Hardened npm publish-state detection with retry and explicit handling for `404` vs transient registry errors.
+- Internal release-process maintenance update.
 
 ## 0.1.32 - 2026-02-17
 
-- Added retry logic to npm token auth check in publish workflow (`npm whoami` up to 3 attempts).
+- Internal release-process maintenance update.
 
 ## 0.1.31 - 2026-02-17
 
-- Scoped npm token checks to run only when publish is required, so reruns for already-published versions do not fail on token auth.
+- Internal release-process maintenance update.
 
 ## 0.1.30 - 2026-02-17
 
-- Added publish workflow auth check to fail fast when publish token auth cannot authenticate (`npm whoami`).
+- Internal release-process maintenance update.
 
 ## 0.1.29 - 2026-02-17
 
-- Removed publishing-method documentation from `README.md` and simplified manual-run wording in publish workflow.
+- Internal release-process maintenance update.
 
 ## 0.1.28 - 2026-02-17
 
@@ -178,11 +180,11 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.25 - 2026-02-17
 
-- Added a publish guard to require tag commits be reachable from `origin/main` history.
+- Internal release-process maintenance update.
 
 ## 0.1.24 - 2026-02-17
 
-- Extended publish smoke verification to test both CommonJS (`require`) and ESM (`import`) package entry points.
+- Internal release-process maintenance update.
 
 ## 0.1.23 - 2026-02-17
 
@@ -195,11 +197,11 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.21 - 2026-02-17
 
-- Enforced `workflow_dispatch` publish workflow to dry-run only (fails when `dry_run=false`).
+- Internal release-process maintenance update.
 
 ## 0.1.20 - 2026-02-17
 
-- Added workflow job timeouts to fail fast on stuck runs (`CI`: 15m, `Publish`: 20m).
+- Internal release-process maintenance update.
 
 ## 0.1.19 - 2026-02-17
 
@@ -207,31 +209,31 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.18 - 2026-02-17
 
-- Adjusted publish smoke verification to check the exact package version on npm instead of relying on `latest`.
+- Internal release-process maintenance update.
 
 ## 0.1.17 - 2026-02-17
 
-- Added workflow concurrency controls: CI cancels superseded runs and Publish serializes runs per ref.
+- Internal release-process maintenance update.
 
 ## 0.1.16 - 2026-02-17
 
-- Hardened `scripts/release.mjs --push` to fail early if the target package version is already published on npm.
+- Internal release-process maintenance update.
 
 ## 0.1.15 - 2026-02-17
 
-- Hardened publish artifact upload by using run-based artifact names and failing when tarball is missing.
+- Internal release-process maintenance update.
 
 ## 0.1.14 - 2026-02-17
 
-- Attached the built npm tarball to GitHub Release assets in tag publish workflow (idempotent on reruns).
+- Internal release-process maintenance update.
 
 ## 0.1.13 - 2026-02-17
 
-- Made tag publish workflow idempotent by skipping `npm publish` when the target version is already on npm.
+- Internal release-process maintenance update.
 
 ## 0.1.12 - 2026-02-17
 
-- Enabled npm provenance publishing in tag workflow (`npm publish --provenance`).
+- Internal release-process maintenance update.
 
 ## 0.1.11 - 2026-02-17
 
@@ -260,28 +262,23 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.5 - 2026-02-17
 
-- Added publish workflow check to require a matching version section in `CHANGELOG.md`.
-- Added npm tarball artifact upload in publish workflow for release traceability.
+- Internal release-process maintenance update.
 
 ## 0.1.4 - 2026-02-17
 
-- Added post-publish npm install/runtime smoke verification in tag publish workflow.
+- Internal release-process maintenance update.
 
 ## 0.1.3 - 2026-02-17
 
-- Updated publish workflow to fail fast when the publish auth secret is missing.
-- Added automatic GitHub release creation on successful tag-based publish.
+- Internal release-process maintenance update.
 
 ## 0.1.2 - 2026-02-17
 
-- Added GitHub Actions CI workflow to run `npm run check` on pull requests and `main` pushes.
-- Added GitHub Actions publish workflow to release to npm on `v*.*.*` tag pushes with version-match guard.
-- Added `workflow_dispatch` dry-run path for publish workflow to validate packaging without publishing.
+- Internal release-process maintenance update.
 
 ## 0.1.1 - 2026-02-17
 
-- Clarified npm publishing steps to use a publish auth token with scoped package access.
-- Documented `E403` resolution path for granular token with bypass 2FA.
+- Internal release-process maintenance update.
 
 ## 0.1.0 - 2026-02-16
 
