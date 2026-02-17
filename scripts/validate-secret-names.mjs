@@ -44,7 +44,7 @@ const WORKFLOW_SECRET_POLICY = {
 };
 
 const SECRET_NAME_USAGE_POLICY = {
-  restrictedName: fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 67, 82, 69, 68, 69, 78, 84, 73, 65, 76]),
+  restrictedNames: [...WORKFLOW_SECRET_POLICY.allowedExplicitNames],
   allowedFiles: new Set([WORKFLOW_SECRET_POLICY.file])
 };
 
@@ -116,14 +116,16 @@ for (const file of listTrackedFiles()) {
     }
 
     if (!SECRET_NAME_USAGE_POLICY.allowedFiles.has(file)) {
-      const restrictedRegex = new RegExp(`\\b${escapeRegExp(SECRET_NAME_USAGE_POLICY.restrictedName)}\\b`, "g");
-      if (restrictedRegex.test(line)) {
-        violations.push({
-          file,
-          line: i + 1,
-          label: "restricted secret-name exposure",
-          detail: SECRET_NAME_USAGE_POLICY.restrictedName
-        });
+      for (const restrictedName of SECRET_NAME_USAGE_POLICY.restrictedNames) {
+        const restrictedRegex = new RegExp(`\\b${escapeRegExp(restrictedName)}\\b`, "g");
+        if (restrictedRegex.test(line)) {
+          violations.push({
+            file,
+            line: i + 1,
+            label: "restricted secret-name exposure",
+            detail: restrictedName
+          });
+        }
       }
     }
   }

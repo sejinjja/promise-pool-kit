@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Generalized restricted secret-name linting to track the workflow allowlist automatically.
+
 ## 0.1.76 - 2026-02-17
 
 - Restricted explicit publish-secret name usage to the publish workflow file.
