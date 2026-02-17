@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.76 - 2026-02-17
+
 - Restricted explicit publish-secret name usage to the publish workflow file.
 
 ## 0.1.75 - 2026-02-17
