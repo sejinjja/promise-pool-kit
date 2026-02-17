@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Tightened changelog linting to validate calendar dates and require at least one bullet item per released version section.
 ## 0.1.22 - 2026-02-17
 
 - Added release-script safety check to fail when files outside `package.json`, `package-lock.json`, and `CHANGELOG.md` change during release prep.

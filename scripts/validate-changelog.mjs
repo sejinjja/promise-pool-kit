@@ -25,6 +25,24 @@ function compareSemverDesc(a, b) {
   return b.patch - a.patch;
 }
 
+function isValidDate(dateString) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+  if (!match) {
+    return false;
+  }
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  return (
+    date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
+  );
+}
+
 const content = readFileSync("CHANGELOG.md", "utf8");
 const lines = content.split(/\r?\n/);
 
@@ -48,16 +66,21 @@ if (releaseHeadings.length === 0) {
 const seen = new Set();
 let previous = null;
 
-for (const { line, index } of releaseHeadings) {
+for (let i = 0; i < releaseHeadings.length; i += 1) {
+  const { line, index } = releaseHeadings[i];
   const match = /^## (\d+\.\d+\.\d+) - (\d{4}-\d{2}-\d{2})$/.exec(line);
   if (!match) {
     fail(`invalid release heading format at line ${index}: '${line}'`);
   }
 
   const version = match[1];
+  const dateString = match[2];
   const parsed = parseSemver(version);
   if (!parsed) {
     fail(`invalid semantic version at line ${index}: '${version}'`);
+  }
+  if (!isValidDate(dateString)) {
+    fail(`invalid release date at line ${index}: '${dateString}'`);
   }
   if (seen.has(version)) {
     fail(`duplicate version heading '${version}' at line ${index}`);
@@ -68,6 +91,13 @@ for (const { line, index } of releaseHeadings) {
     fail("release versions must be in strictly descending order");
   }
   previous = parsed;
+
+  const nextHeading = releaseHeadings[i + 1];
+  const sectionBody = lines.slice(index, nextHeading ? nextHeading.index - 1 : lines.length);
+  const hasBullet = sectionBody.some((bodyLine) => bodyLine.trim().startsWith("- "));
+  if (!hasBullet) {
+    fail(`release section ${version} must include at least one bullet item`);
+  }
 }
 
 console.log("CHANGELOG validation passed.");
