@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Pinned npm registry URL explicitly for publish-state checks, publish, and smoke-install steps in the publish workflow.
+
 ## 0.1.38 - 2026-02-17
 
 - Added short post-failure npm visibility polling in publish step to reduce false failures from registry propagation delays.
