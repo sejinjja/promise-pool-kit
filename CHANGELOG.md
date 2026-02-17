@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.27 - 2026-02-17
+
 - Added packlist linting to `npm run check` to verify required dist files are included and source/test/script paths are excluded from `npm pack --dry-run` output.
+
 ## 0.1.26 - 2026-02-17
 
 - Added `package-lock.json` consistency linting (name/version parity with `package.json`) to `npm run check`.
