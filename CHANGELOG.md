@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.46 - 2026-02-17
+
 - Added `NPM_TOKEN` placeholder-value guard to fail fast when common dummy strings are configured.
 
 ## 0.1.45 - 2026-02-17
