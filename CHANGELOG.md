@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.70 - 2026-02-17
+
 - Internal release-process maintenance update.
 
 ## 0.1.69 - 2026-02-17
