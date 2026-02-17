@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Fixed tag-history verification fetch to use authenticated `origin` remote from checkout credentials, avoiding intermittent credential prompts in publish runs.
+
 ## 0.1.61 - 2026-02-17
 
 - Added secret-alias linting to `npm run check` to fail if legacy token environment aliases reappear in tracked files.
