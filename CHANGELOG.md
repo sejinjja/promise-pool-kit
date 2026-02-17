@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added retry handling to GitHub release creation/upload step in publish workflow to reduce transient API-auth/server flake failures.
+
 ## 0.1.67 - 2026-02-17
 
 - Switched publish workflow to indirect secret lookup via `secrets[vars.PUBLISH_SECRET_NAME]` so the concrete publish-secret key is not embedded in repo workflow code.
