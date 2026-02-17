@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.64 - 2026-02-17
+
 - Added retry handling to GitHub compare API ancestry checks in publish workflow to reduce false failures from transient API errors.
 
 ## 0.1.63 - 2026-02-17
