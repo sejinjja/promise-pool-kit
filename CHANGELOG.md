@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.16 - 2026-02-17
+
 - Hardened `scripts/release.mjs --push` to fail early if the target package version is already published on npm.
+
 ## 0.1.15 - 2026-02-17
 
 - Hardened publish artifact upload by using run-based artifact names and failing when tarball is missing.
