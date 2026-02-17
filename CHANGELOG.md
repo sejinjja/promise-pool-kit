@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Removed `setup-node` registry injection from publish workflow to minimize workflow-wide auth env/config side effects.
+
 ## 0.1.64 - 2026-02-17
 
 - Added retry handling to GitHub compare API ancestry checks in publish workflow to reduce false failures from transient API errors.
