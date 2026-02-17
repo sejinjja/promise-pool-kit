@@ -65,6 +65,34 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Verify published package install and runtime
+        if: github.event_name == 'push'
+        run: |
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+
+          for i in {1..10}; do
+            PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME" version 2>/dev/null || true)"
+            if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
+              break
+            fi
+            echo "Waiting for $PACKAGE_NAME@$PACKAGE_VERSION to be visible on npm ($i/10)..."
+            sleep 6
+          done
+
+          PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME" version)"
+          if [ "$PUBLISHED_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Published version mismatch: expected $PACKAGE_VERSION, got $PUBLISHED_VERSION"
+            exit 1
+          fi
+
+          TMP_DIR="$(mktemp -d)"
+          pushd "$TMP_DIR" > /dev/null
+          npm init -y > /dev/null 2>&1
+          npm i "$PACKAGE_NAME@$PACKAGE_VERSION" --silent
+          node -e "const { retry, runPool } = require('$PACKAGE_NAME'); (async () => { const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('smoke failed'); console.log('smoke ok'); })();"
+          popd > /dev/null
+
       - name: Create GitHub release
         if: github.event_name == 'push'
         run: |
