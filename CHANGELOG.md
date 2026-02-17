@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.63 - 2026-02-17
+
 - Switched tag-history verification to GitHub compare API checks to avoid git remote credential-helper dependency in publish runs.
 
 ## 0.1.62 - 2026-02-17
