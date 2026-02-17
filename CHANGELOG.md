@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.66 - 2026-02-17
+
 - Removed step-level credential env injection in publish workflow and switched to per-step local secret assignment to reduce env block exposure in logs.
 
 ## 0.1.65 - 2026-02-17
