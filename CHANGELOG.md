@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.4 - 2026-02-17
+
 - Added post-publish npm install/runtime smoke verification in tag publish workflow.
 
 ## 0.1.3 - 2026-02-17
