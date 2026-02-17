@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.14 - 2026-02-17
+
 - Attached the built npm tarball to GitHub Release assets in tag publish workflow (idempotent on reruns).
 
 ## 0.1.13 - 2026-02-17
