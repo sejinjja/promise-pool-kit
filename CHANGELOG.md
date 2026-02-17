@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.17 - 2026-02-17
+
 - Added workflow concurrency controls: CI cancels superseded runs and Publish serializes runs per ref.
+
 ## 0.1.16 - 2026-02-17
 
 - Hardened `scripts/release.mjs --push` to fail early if the target package version is already published on npm.
