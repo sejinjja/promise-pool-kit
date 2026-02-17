@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.67 - 2026-02-17
+
 - Switched publish workflow to indirect secret lookup via `secrets[vars.PUBLISH_SECRET_NAME]` so the concrete publish-secret key is not embedded in repo workflow code.
 
 ## 0.1.66 - 2026-02-17
