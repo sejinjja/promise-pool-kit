@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Internal release-process maintenance update.
+
 ## 0.1.69 - 2026-02-17
 
 - Refined changelog wording to avoid deployment-method details in public release notes.
