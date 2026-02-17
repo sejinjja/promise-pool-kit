@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.3 - 2026-02-17
+
 - Updated publish workflow to fail fast when `NPM_TOKEN` secret is missing.
 - Added automatic GitHub release creation on successful tag-based publish.
 
