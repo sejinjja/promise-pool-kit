@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.36 - 2026-02-17
+
 - Tightened `NPM_TOKEN` validation to fail when whitespace/newline characters are present before npm auth/publish.
 
 ## 0.1.35 - 2026-02-17
