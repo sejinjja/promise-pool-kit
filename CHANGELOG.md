@@ -4,13 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Removed explicit publish-secret key naming from workflow log messages and switched npm auth binding to indirect secret-name lookup via `vars.PUBLISH_AUTH_SECRET_NAME`.
+
 ## 0.1.54 - 2026-02-17
 
-- Added `NPM_TOKEN` validation to reject markdown backtick-wrapped values and require raw token text.
+- Added publish-token validation to reject markdown backtick-wrapped values and require raw token text.
 
 ## 0.1.53 - 2026-02-17
 
-- Added `NPM_TOKEN` validation to reject `.npmrc` auth-config strings (for example `_authToken=` or `registry.npmjs.org/...`) and require raw token value.
+- Added publish-token validation to reject `.npmrc` auth-config strings (for example `_authToken=` or `registry.npmjs.org/...`) and require raw token value.
 
 ## 0.1.52 - 2026-02-17
 
@@ -18,31 +20,31 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.51 - 2026-02-17
 
-- Expanded `NPM_TOKEN` placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
+- Expanded publish-token placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
 
 ## 0.1.50 - 2026-02-17
 
-- Added fast-fail detection for obvious non-npm token prefixes in `NPM_TOKEN` (for example `ghp_`, `github_pat_`, `glpat-`).
+- Added fast-fail detection for obvious non-npm token prefixes in publish-token values (for example `ghp_`, `github_pat_`, `glpat-`).
 
 ## 0.1.49 - 2026-02-17
 
-- Extended `NPM_TOKEN` placeholder detection to catch environment-reference literals like `$NPM_TOKEN` and `%NPM_TOKEN%`.
+- Extended publish-token placeholder detection to catch environment-reference literals like `$PUBLISH_TOKEN` and `%PUBLISH_TOKEN%`.
 
 ## 0.1.48 - 2026-02-17
 
-- Hardened `NPM_TOKEN` placeholder checks with case-insensitive matching and unresolved template-expression detection.
+- Hardened publish-token placeholder checks with case-insensitive matching and unresolved template-expression detection.
 
 ## 0.1.47 - 2026-02-17
 
-- Added `NPM_TOKEN` validation for masked/redacted placeholder values (for example `***`, `redacted`).
+- Added publish-token validation for masked/redacted placeholder values (for example `***`, `redacted`).
 
 ## 0.1.46 - 2026-02-17
 
-- Added `NPM_TOKEN` placeholder-value guard to fail fast when common dummy strings are configured.
+- Added publish-token placeholder-value guard to fail fast when common dummy strings are configured.
 
 ## 0.1.45 - 2026-02-17
 
-- Added `NPM_TOKEN` guard to fail when the secret appears to include surrounding quote characters.
+- Added publish-token guard to fail when the secret appears to include surrounding quote characters.
 
 ## 0.1.44 - 2026-02-17
 
@@ -78,7 +80,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.36 - 2026-02-17
 
-- Tightened `NPM_TOKEN` validation to fail when whitespace/newline characters are present before npm auth/publish.
+- Tightened publish-token validation to fail when whitespace/newline characters are present before npm auth/publish.
 
 ## 0.1.35 - 2026-02-17
 
@@ -102,7 +104,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.30 - 2026-02-17
 
-- Added publish workflow auth check to fail fast when `NPM_TOKEN` cannot authenticate (`npm whoami`).
+- Added publish workflow auth check to fail fast when publish token auth cannot authenticate (`npm whoami`).
 
 ## 0.1.29 - 2026-02-17
 
@@ -213,7 +215,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.3 - 2026-02-17
 
-- Updated publish workflow to fail fast when `NPM_TOKEN` secret is missing.
+- Updated publish workflow to fail fast when the publish auth secret is missing.
 - Added automatic GitHub release creation on successful tag-based publish.
 
 ## 0.1.2 - 2026-02-17
@@ -224,7 +226,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.1 - 2026-02-17
 
-- Clarified npm publishing steps to use `NPM_TOKEN` with scoped package access.
+- Clarified npm publishing steps to use a publish auth token with scoped package access.
 - Documented `E403` resolution path for granular token with bypass 2FA.
 
 ## 0.1.0 - 2026-02-16
