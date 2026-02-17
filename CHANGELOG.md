@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.57 - 2026-02-17
+
 - Generalized publish-workflow validation/error wording from "token" to "credential" to reduce secret-type exposure in logs.
 
 ## 0.1.56 - 2026-02-17
