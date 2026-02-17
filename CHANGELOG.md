@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.48 - 2026-02-17
+
 - Hardened `NPM_TOKEN` placeholder checks with case-insensitive matching and unresolved template-expression detection.
 
 ## 0.1.47 - 2026-02-17
