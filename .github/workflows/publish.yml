@@ -110,7 +110,7 @@ jobs:
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
 
           for i in {1..10}; do
-            PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME" version 2>/dev/null || true)"
+            PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
             if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
               break
             fi
@@ -118,9 +118,9 @@ jobs:
             sleep 6
           done
 
-          PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME" version)"
+          PUBLISHED_VERSION="$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
           if [ "$PUBLISHED_VERSION" != "$PACKAGE_VERSION" ]; then
-            echo "Published version mismatch: expected $PACKAGE_VERSION, got $PUBLISHED_VERSION"
+            echo "Published version not visible yet: expected $PACKAGE_VERSION, got '$PUBLISHED_VERSION'"
             exit 1
           fi
 

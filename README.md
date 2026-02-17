@@ -132,6 +132,7 @@ Uploaded tarball artifact names are run-based and fail fast if the tarball file 
 Tag-based release notes are populated from the matching `CHANGELOG.md` version section.
 Tag-based npm publish uses provenance attestations (`npm publish --provenance`).
 Tag workflow reruns are idempotent: if that exact version is already on npm, publish is skipped.
+Tag workflow post-publish verification checks the exact target version on npm (not only `latest`).
 Tag workflow also attaches the built npm tarball to the corresponding GitHub Release assets.
 CI workflow cancels superseded runs on the same ref, while publish workflow serializes runs per ref.
 

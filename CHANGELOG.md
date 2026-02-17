@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Adjusted publish smoke verification to check the exact package version on npm instead of relying on `latest`.
 ## 0.1.17 - 2026-02-17
 
 - Added workflow concurrency controls: CI cancels superseded runs and Publish serializes runs per ref.
