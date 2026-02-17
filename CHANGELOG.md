@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.52 - 2026-02-17
+
 - Fixed main-history verification fetch to use explicit `github.token` auth header, preventing anonymous `git fetch` failures in publish runs.
 
 ## 0.1.51 - 2026-02-17
