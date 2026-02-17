@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.55 - 2026-02-17
+
 - Removed explicit publish-secret key naming from workflow log messages and switched npm auth binding to indirect secret-name lookup via `vars.PUBLISH_AUTH_SECRET_NAME`.
 
 ## 0.1.54 - 2026-02-17
