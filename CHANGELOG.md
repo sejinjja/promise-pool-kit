@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Generalized publish-workflow validation/error wording from "token" to "credential" to reduce secret-type exposure in logs.
+
 ## 0.1.56 - 2026-02-17
 
 - Replaced indirect publish-secret lookup with direct `secrets.NODE_AUTH_TOKEN` binding to remove secret-name exposure through repository variables.
