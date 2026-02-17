@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.58 - 2026-02-17
+
 - Added npm auth/publish error-output redaction in publish workflow to scrub common credential-bearing patterns before logging.
 
 ## 0.1.57 - 2026-02-17
