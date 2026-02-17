@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.35 - 2026-02-17
+
 - Added retry-aware npm publish step that distinguishes auth failures, retries transient errors, and treats already-visible target versions as success.
 
 ## 0.1.34 - 2026-02-17
