@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.33 - 2026-02-17
+
 - Hardened npm publish-state detection with retry and explicit handling for `404` vs transient registry errors.
+
 ## 0.1.32 - 2026-02-17
 
 - Added retry logic to npm token auth check in publish workflow (`npm whoami` up to 3 attempts).
