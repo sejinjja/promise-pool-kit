@@ -69,11 +69,14 @@ jobs:
       - name: Verify tag commit is in main history
         if: github.event_name == 'push'
         run: |
-          git fetch --no-tags origin main --depth=200
-          if ! git merge-base --is-ancestor "${GITHUB_SHA}" origin/main; then
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
+          git -c http.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" fetch --no-tags "${REPO_URL}" main --depth=200
+          if ! git merge-base --is-ancestor "${GITHUB_SHA}" FETCH_HEAD; then
             echo "Tag commit ${GITHUB_SHA} is not in origin/main history."
             exit 1
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Run full checks
         run: npm run check

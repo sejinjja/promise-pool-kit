@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Fixed main-history verification fetch to use explicit `github.token` auth header, preventing anonymous `git fetch` failures in publish runs.
+
 ## 0.1.51 - 2026-02-17
 
 - Expanded `NPM_TOKEN` placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
