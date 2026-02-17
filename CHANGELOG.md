@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added fast-fail detection for obvious non-npm token prefixes in `NPM_TOKEN` (for example `ghp_`, `github_pat_`, `glpat-`).
+
 ## 0.1.49 - 2026-02-17
 
 - Extended `NPM_TOKEN` placeholder detection to catch environment-reference literals like `$NPM_TOKEN` and `%NPM_TOKEN%`.
