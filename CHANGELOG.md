@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.44 - 2026-02-17
+
 - Added fail-fast handling for npm CIDR/IP-restriction auth errors (`EAUTHIP`, IP/CIDR denial messages) in auth and publish checks.
 
 ## 0.1.43 - 2026-02-17
