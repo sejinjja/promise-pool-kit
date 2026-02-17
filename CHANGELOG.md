@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.6 - 2026-02-17
+
 - Added `scripts/release.mjs` to automate version bump, changelog promotion, checks, commit, and tag creation.
 - Added package scripts for patch/minor/major release preparation.
 
