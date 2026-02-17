@@ -64,8 +64,9 @@ jobs:
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: npm-package-${{ github.ref_name }}
+          name: npm-package-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ steps.pack.outputs.tarball }}
+          if-no-files-found: error
 
       - name: Verify npm token is configured
         if: github.event_name == 'push'
