@@ -180,7 +180,7 @@ jobs:
             exit 1
           fi
         env:
-          NODE_AUTH_TOKEN: ${{ secrets[vars.PUBLISH_AUTH_SECRET_NAME] }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Verify publish token can authenticate
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
@@ -208,7 +208,7 @@ jobs:
           echo "Publish token authentication failed after retries."
           exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets[vars.PUBLISH_AUTH_SECRET_NAME] }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Publish to npm
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
@@ -258,7 +258,7 @@ jobs:
           echo "npm publish failed after retries."
           exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets[vars.PUBLISH_AUTH_SECRET_NAME] }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Verify published package install and runtime
         if: github.event_name == 'push'
