@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.56 - 2026-02-17
+
 - Replaced indirect publish-secret lookup with direct `secrets.NODE_AUTH_TOKEN` binding to remove secret-name exposure through repository variables.
 
 ## 0.1.55 - 2026-02-17
