@@ -123,6 +123,8 @@ npm whoami
 npm access list packages <your-npm-id>
 ```
 
+For automated tag-based publishing via GitHub Actions, set repository secret `NPM_TOKEN` (granular token with publish permission).
+
 ## License
 
 MIT

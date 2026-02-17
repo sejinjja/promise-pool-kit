@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- Added GitHub Actions CI workflow to run `npm run check` on pull requests and `main` pushes.
+- Added GitHub Actions publish workflow to release to npm on `v*.*.*` tag pushes with version-match guard.
+
 ## 0.1.1 - 2026-02-17
 
 - Clarified npm publishing steps to use `NPM_TOKEN` with scoped package access.
