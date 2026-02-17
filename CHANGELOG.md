@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.30 - 2026-02-17
+
 - Added publish workflow auth check to fail fast when `NPM_TOKEN` cannot authenticate (`npm whoami`).
+
 ## 0.1.29 - 2026-02-17
 
 - Removed publishing-method documentation from `README.md` and simplified manual-run wording in publish workflow.
