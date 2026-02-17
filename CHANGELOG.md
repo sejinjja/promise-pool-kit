@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Switched tag-history verification to GitHub compare API checks to avoid git remote credential-helper dependency in publish runs.
+
 ## 0.1.62 - 2026-02-17
 
 - Fixed tag-history verification fetch to use authenticated `origin` remote from checkout credentials, avoiding intermittent credential prompts in publish runs.
