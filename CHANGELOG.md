@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Internal release-process maintenance update.
+
 ## 0.1.71 - 2026-02-17
 
 - Hardened secret-alias linting to detect legacy aliases case-insensitively.

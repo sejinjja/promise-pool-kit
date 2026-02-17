@@ -155,29 +155,10 @@ jobs:
           echo "Unable to determine whether ${SPEC} is already published."
           exit 1
 
-      - name: Verify publish secret alias policy
-        if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
-        run: |
-          SECRET_ALIAS="${{ vars.PUBLISH_SECRET_NAME }}"
-          if [ -z "${SECRET_ALIAS}" ]; then
-            echo "Missing publish secret alias variable."
-            exit 1
-          fi
-
-          SECRET_ALIAS_UPPER="$(printf "%s" "${SECRET_ALIAS}" | tr '[:lower:]' '[:upper:]')"
-          LEGACY_ALIAS_A="$(printf '\x4E\x50\x4D\x5F\x54\x4F\x4B\x45\x4E')"
-          LEGACY_ALIAS_B="$(printf '\x4E\x4F\x44\x45\x5F\x41\x55\x54\x48\x5F\x54\x4F\x4B\x45\x4E')"
-          case "${SECRET_ALIAS_UPPER}" in
-            "${LEGACY_ALIAS_A}" | "${LEGACY_ALIAS_B}")
-              echo "Legacy publish secret aliases are not allowed."
-              exit 1
-              ;;
-          esac
-
       - name: Verify publish credential is configured
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
         run: |
-          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
+          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
           echo "::add-mask::${CREDENTIAL}"
           if [ -z "${CREDENTIAL}" ]; then
             echo "Missing publish credential secret."
@@ -232,7 +213,7 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
+          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
           echo "::add-mask::${CREDENTIAL}"
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
@@ -276,7 +257,7 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
+          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
           echo "::add-mask::${CREDENTIAL}"
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
