@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added short post-failure npm visibility polling in publish step to reduce false failures from registry propagation delays.
+
 ## 0.1.37 - 2026-02-17
 
 - Reordered npm publish failure handling to check whether the target version is already visible before treating forbidden/auth errors as fatal.
