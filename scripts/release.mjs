@@ -74,6 +74,14 @@ function ensureVersionNotPublished(packageName, version) {
   }
 }
 
+function ensureRemoteTagNotExists(version) {
+  const ref = `refs/tags/v${version}`;
+  const remoteTag = run(`git ls-remote --tags origin ${ref}`);
+  if (remoteTag) {
+    throw new Error(`Remote tag v${version} already exists on origin.`);
+  }
+}
+
 function parseSemver(version) {
   const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
   if (!match) {
@@ -213,6 +221,7 @@ function main() {
   }
 
   if (push && !dryRun) {
+    ensureRemoteTagNotExists(nextVersion);
     ensureVersionNotPublished(pkg.name, nextVersion);
   }
 

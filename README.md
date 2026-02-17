@@ -150,6 +150,7 @@ npm run release:dry-run
 `--push` mode is guarded to run only on the `main` branch.
 `--push` mode also verifies local `main` is not behind `origin/main`.
 `--push` mode also checks npm and fails early if the target version is already published.
+`--push` mode also fails early if the target git tag already exists on `origin`.
 
 ## License
 

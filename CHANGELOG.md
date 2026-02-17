@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Hardened `scripts/release.mjs --push` to fail early when the target tag already exists on `origin`.
 ## 0.1.18 - 2026-02-17
 
 - Adjusted publish smoke verification to check the exact package version on npm instead of relying on `latest`.
