@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.60 - 2026-02-17
+
 - Minimized credential lifetime in publish/auth steps by unsetting the env secret after writing a temporary `.npmrc` and using `npm --userconfig` for authenticated commands.
 
 ## 0.1.59 - 2026-02-17
