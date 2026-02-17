@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Restricted explicit publish-secret name usage to the publish workflow file.
+
 ## 0.1.75 - 2026-02-17
 
 - Expanded secret-alias linting to block an additional legacy token alias and removed self-file scan exemptions.
