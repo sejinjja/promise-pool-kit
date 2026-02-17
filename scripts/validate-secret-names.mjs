@@ -14,13 +14,13 @@ function escapeRegExp(value) {
 const FORBIDDEN_PATTERNS = [
   {
     label: "legacy alias A",
-    regex: new RegExp(`\\b${escapeRegExp(fromCodes([78, 80, 77, 95, 84, 79, 75, 69, 78]))}\\b`, "g")
+    regex: new RegExp(`\\b${escapeRegExp(fromCodes([78, 80, 77, 95, 84, 79, 75, 69, 78]))}\\b`, "gi")
   },
   {
     label: "legacy alias B",
     regex: new RegExp(
       `\\b${escapeRegExp(fromCodes([78, 79, 68, 69, 95, 65, 85, 84, 72, 95, 84, 79, 75, 69, 78]))}\\b`,
-      "g"
+      "gi"
     )
   }
 ];
