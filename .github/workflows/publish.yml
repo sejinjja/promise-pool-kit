@@ -151,7 +151,7 @@ jobs:
           fi
           TOKEN_LOWER="$(printf "%s" "${NODE_AUTH_TOKEN}" | tr '[:upper:]' '[:lower:]')"
           case "${TOKEN_LOWER}" in
-            "npm_token" | "\${npm_token}" | "your_npm_token" | "your-npm-token" | "changeme" | "token" | "<token>" | "<npm_token>")
+            "npm_token" | "\${npm_token}" | "\$npm_token" | "%npm_token%" | "your_npm_token" | "your-npm-token" | "changeme" | "token" | "<token>" | "<npm_token>")
               echo "NPM_TOKEN appears to be a placeholder value."
               exit 1
               ;;
