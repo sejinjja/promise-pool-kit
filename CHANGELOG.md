@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 0.1.2 - 2026-02-17
 
 - Added GitHub Actions CI workflow to run `npm run check` on pull requests and `main` pushes.
 - Added GitHub Actions publish workflow to release to npm on `v*.*.*` tag pushes with version-match guard.
+- Added `workflow_dispatch` dry-run path for publish workflow to validate packaging without publishing.
 
 ## 0.1.1 - 2026-02-17
 
