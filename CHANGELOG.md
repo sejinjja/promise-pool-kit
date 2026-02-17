@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Centralized publish workflow npm registry configuration via job-level `NPM_REGISTRY_URL` environment variable.
+
 ## 0.1.39 - 2026-02-17
 
 - Pinned npm registry URL explicitly for publish-state checks, publish, and smoke-install steps in the publish workflow.

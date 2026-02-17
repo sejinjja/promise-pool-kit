@@ -23,6 +23,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      NPM_REGISTRY_URL: https://registry.npmjs.org
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -96,11 +98,10 @@ jobs:
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
           SPEC="${PACKAGE_NAME}@${PACKAGE_VERSION}"
-          REGISTRY_URL="https://registry.npmjs.org"
 
           for i in {1..3}; do
             set +e
-            VIEW_OUTPUT="$(npm view --registry="${REGISTRY_URL}" "${SPEC}" version 2>&1)"
+            VIEW_OUTPUT="$(npm view --registry="${NPM_REGISTRY_URL}" "${SPEC}" version 2>&1)"
             STATUS=$?
             set -e
 
@@ -148,7 +149,7 @@ jobs:
         run: |
           for i in {1..3}; do
             set +e
-            AUTH_OUTPUT="$(npm whoami --registry=https://registry.npmjs.org 2>&1)"
+            AUTH_OUTPUT="$(npm whoami --registry="${NPM_REGISTRY_URL}" 2>&1)"
             STATUS=$?
             set -e
 
@@ -176,11 +177,10 @@ jobs:
         run: |
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
-          REGISTRY_URL="https://registry.npmjs.org"
 
           check_published_visibility() {
             for j in {1..3}; do
-              PUBLISHED_VERSION="$(npm view --registry="${REGISTRY_URL}" "${PACKAGE_NAME}@${PACKAGE_VERSION}" version 2>/dev/null || true)"
+              PUBLISHED_VERSION="$(npm view --registry="${NPM_REGISTRY_URL}" "${PACKAGE_NAME}@${PACKAGE_VERSION}" version 2>/dev/null || true)"
               if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
                 return 0
               fi
@@ -193,7 +193,7 @@ jobs:
 
           for i in {1..3}; do
             set +e
-            PUBLISH_OUTPUT="$(npm publish --registry="${REGISTRY_URL}" --access public --provenance 2>&1)"
+            PUBLISH_OUTPUT="$(npm publish --registry="${NPM_REGISTRY_URL}" --access public --provenance 2>&1)"
             STATUS=$?
             set -e
 
@@ -227,10 +227,9 @@ jobs:
         run: |
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
-          REGISTRY_URL="https://registry.npmjs.org"
 
           for i in {1..10}; do
-            PUBLISHED_VERSION="$(npm view --registry="${REGISTRY_URL}" "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
+            PUBLISHED_VERSION="$(npm view --registry="${NPM_REGISTRY_URL}" "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
             if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
               break
             fi
@@ -238,7 +237,7 @@ jobs:
             sleep 6
           done
 
-          PUBLISHED_VERSION="$(npm view --registry="${REGISTRY_URL}" "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
+          PUBLISHED_VERSION="$(npm view --registry="${NPM_REGISTRY_URL}" "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null || true)"
           if [ "$PUBLISHED_VERSION" != "$PACKAGE_VERSION" ]; then
             echo "Published version not visible yet: expected $PACKAGE_VERSION, got '$PUBLISHED_VERSION'"
             exit 1
@@ -247,7 +246,7 @@ jobs:
           TMP_DIR="$(mktemp -d)"
           pushd "$TMP_DIR" > /dev/null
           npm init -y > /dev/null 2>&1
-          npm i "$PACKAGE_NAME@$PACKAGE_VERSION" --registry="${REGISTRY_URL}" --silent
+          npm i "$PACKAGE_NAME@$PACKAGE_VERSION" --registry="${NPM_REGISTRY_URL}" --silent
           node -e "const { retry, runPool } = require('$PACKAGE_NAME'); (async () => { const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('cjs smoke failed'); console.log('cjs smoke ok'); })();"
           node --input-type=module -e "import { retry, runPool } from '$PACKAGE_NAME'; const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('esm smoke failed'); console.log('esm smoke ok');"
           popd > /dev/null
