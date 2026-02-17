@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `scripts/validate-changelog.mjs` and wired it into `npm run check`.
+
 ## 0.1.7 - 2026-02-17
 
 - Added a safety guard in `scripts/release.mjs` to allow `--push` only on the `main` branch.
