@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Extended publish smoke verification to test both CommonJS (`require`) and ESM (`import`) package entry points.
 ## 0.1.23 - 2026-02-17
 
 - Tightened changelog linting to validate calendar dates and require at least one bullet item per released version section.

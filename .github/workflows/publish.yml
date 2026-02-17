@@ -137,7 +137,8 @@ jobs:
           pushd "$TMP_DIR" > /dev/null
           npm init -y > /dev/null 2>&1
           npm i "$PACKAGE_NAME@$PACKAGE_VERSION" --silent
-          node -e "const { retry, runPool } = require('$PACKAGE_NAME'); (async () => { const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('smoke failed'); console.log('smoke ok'); })();"
+          node -e "const { retry, runPool } = require('$PACKAGE_NAME'); (async () => { const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('cjs smoke failed'); console.log('cjs smoke ok'); })();"
+          node --input-type=module -e "import { retry, runPool } from '$PACKAGE_NAME'; const r = await retry(async () => 'ok'); const p = await runPool([1, 2], async (n) => n * 2); if (r !== 'ok' || p.fulfilled.length !== 2) throw new Error('esm smoke failed'); console.log('esm smoke ok');"
           popd > /dev/null
 
       - name: Prepare release notes from changelog
