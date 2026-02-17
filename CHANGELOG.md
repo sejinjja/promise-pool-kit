@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Removed publishing-method documentation from `README.md` and simplified manual-run wording in publish workflow.
 ## 0.1.28 - 2026-02-17
 
 - Added exports metadata linting to `npm run check` to verify `main/module/types/exports` consistency and referenced build file existence.

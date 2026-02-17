@@ -109,54 +109,6 @@ npm run check
 2. Create a branch and add tests for behavior changes.
 3. Submit a pull request using the template.
 
-## Publishing
-
-```bash
-npm run check
-npm publish --access public --//registry.npmjs.org/:_authToken=$NPM_TOKEN
-```
-
-If the package is scoped and publish fails with `E403` about 2FA, use a granular npm token with `Read and Write` + `Bypass 2FA`, then set it as `NPM_TOKEN`.
-
-If the package is scoped and first publish fails for access reasons, verify scope ownership:
-
-```bash
-npm whoami
-npm access list packages <your-npm-id>
-```
-
-For automated tag-based publishing via GitHub Actions, set repository secret `NPM_TOKEN` (granular token with publish permission).
-Tag-based publish also creates a GitHub release for the same tag automatically.
-Manual `workflow_dispatch` runs are dry-run only; publishing happens only on `v*.*.*` tag pushes.
-Tag-based publish requires the tag commit to be included in `origin/main` history.
-Tag-based publish requires a matching version entry in `CHANGELOG.md` and uploads the npm tarball as a workflow artifact.
-Uploaded tarball artifact names are run-based and fail fast if the tarball file is missing.
-Tag-based release notes are populated from the matching `CHANGELOG.md` version section.
-Tag-based npm publish uses provenance attestations (`npm publish --provenance`).
-Tag workflow reruns are idempotent: if that exact version is already on npm, publish is skipped.
-Tag workflow post-publish verification checks the exact target version on npm (not only `latest`).
-Tag workflow smoke-tests both CommonJS and ESM imports after publish.
-Tag workflow also attaches the built npm tarball to the corresponding GitHub Release assets.
-CI workflow cancels superseded runs on the same ref, while publish workflow serializes runs per ref.
-Workflow jobs are timeout-bound to avoid hung runners (`CI`: 15 minutes, `Publish`: 20 minutes).
-
-For local release preparation:
-
-```bash
-npm run release:patch
-# or: npm run release:minor / npm run release:major
-# add --push by running the script directly:
-node scripts/release.mjs patch --push
-# quick preview without file changes:
-npm run release:dry-run
-```
-
-`--push` mode is guarded to run only on the `main` branch.
-`--push` mode also verifies local `main` is not behind `origin/main`.
-`--push` mode also checks npm and fails early if the target version is already published.
-`--push` mode also fails early if the target git tag already exists on `origin`.
-Release prep fails if files outside `package.json`, `package-lock.json`, and `CHANGELOG.md` are modified.
-
 ## License
 
 MIT

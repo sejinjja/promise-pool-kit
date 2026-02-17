@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Run packaging check only (no npm publish)"
         required: true
         type: boolean
         default: true
@@ -42,7 +41,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: |
           if [ "${{ inputs.dry_run }}" != "true" ]; then
-            echo "workflow_dispatch supports dry-run only. Use tag push to publish."
+            echo "workflow_dispatch requires dry_run=true."
             exit 1
           fi
 
