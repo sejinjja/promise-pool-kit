@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Tightened `NPM_TOKEN` validation to fail when whitespace/newline characters are present before npm auth/publish.
+
 ## 0.1.35 - 2026-02-17
 
 - Added retry-aware npm publish step that distinguishes auth failures, retries transient errors, and treats already-visible target versions as success.
