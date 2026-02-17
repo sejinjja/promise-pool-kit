@@ -141,13 +141,26 @@ jobs:
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
         run: |
           for i in {1..3}; do
-            if npm whoami --registry=https://registry.npmjs.org > /dev/null 2>&1; then
+            set +e
+            AUTH_OUTPUT="$(npm whoami --registry=https://registry.npmjs.org 2>&1)"
+            STATUS=$?
+            set -e
+
+            if [ $STATUS -eq 0 ]; then
               exit 0
             fi
-            echo "NPM_TOKEN authentication retry ($i/3)..."
+
+            if echo "$AUTH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|Unable to authenticate|authentication token"; then
+              echo "NPM_TOKEN authentication failed."
+              echo "$AUTH_OUTPUT"
+              exit 1
+            fi
+
+            echo "Transient npm auth failure ($i/3), retrying..."
+            echo "$AUTH_OUTPUT"
             sleep 3
           done
-          echo "NPM_TOKEN authentication failed."
+          echo "NPM_TOKEN authentication failed after retries."
           exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

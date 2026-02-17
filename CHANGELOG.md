@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Updated npm token auth check to fail immediately on explicit auth errors and retry only transient failures.
 ## 0.1.33 - 2026-02-17
 
 - Hardened npm publish-state detection with retry and explicit handling for `404` vs transient registry errors.
