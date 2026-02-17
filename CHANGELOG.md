@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Switched publish workflow to indirect secret lookup via `secrets[vars.PUBLISH_SECRET_NAME]` so the concrete publish-secret key is not embedded in repo workflow code.
+
 ## 0.1.66 - 2026-02-17
 
 - Removed step-level credential env injection in publish workflow and switched to per-step local secret assignment to reduce env block exposure in logs.

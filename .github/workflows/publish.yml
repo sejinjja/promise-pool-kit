@@ -158,7 +158,7 @@ jobs:
       - name: Verify publish credential is configured
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
         run: |
-          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
+          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
           echo "::add-mask::${CREDENTIAL}"
           if [ -z "${CREDENTIAL}" ]; then
             echo "Missing publish credential secret."
@@ -213,7 +213,7 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
+          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
           echo "::add-mask::${CREDENTIAL}"
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
@@ -257,7 +257,7 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
-          CREDENTIAL="${{ secrets.PUBLISH_CREDENTIAL }}"
+          CREDENTIAL="${{ secrets[vars.PUBLISH_SECRET_NAME] }}"
           echo "::add-mask::${CREDENTIAL}"
           REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
           REGISTRY_HOST="${REGISTRY_HOST#http://}"
