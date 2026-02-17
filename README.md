@@ -111,14 +111,16 @@ npm run check
 
 ```bash
 npm run check
-npm publish --access public
+npm publish --access public --//registry.npmjs.org/:_authToken=$NPM_TOKEN
 ```
 
-If the package is scoped and first publish fails, verify your npm scope ownership:
+If the package is scoped and publish fails with `E403` about 2FA, use a granular npm token with `Read and Write` + `Bypass 2FA`, then set it as `NPM_TOKEN`.
+
+If the package is scoped and first publish fails for access reasons, verify scope ownership:
 
 ```bash
 npm whoami
-npm access ls-packages <your-npm-id>
+npm access list packages <your-npm-id>
 ```
 
 ## License
