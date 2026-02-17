@@ -101,7 +101,7 @@ npm install
 npm run check
 ```
 
-`npm run check` also validates `CHANGELOG.md` heading format, version ordering, release-date validity, and section bullet presence.
+`npm run check` also validates `CHANGELOG.md` heading format, version ordering, release-date validity, section bullet presence, and `package-lock.json` metadata consistency.
 
 ## Open Source Workflow
 
