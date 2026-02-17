@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.20 - 2026-02-17
+
 - Added workflow job timeouts to fail fast on stuck runs (`CI`: 15m, `Publish`: 20m).
+
 ## 0.1.19 - 2026-02-17
 
 - Hardened `scripts/release.mjs --push` to fail early when the target tag already exists on `origin`.
