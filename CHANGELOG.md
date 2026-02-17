@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.26 - 2026-02-17
+
 - Added `package-lock.json` consistency linting (name/version parity with `package.json`) to `npm run check`.
+
 ## 0.1.25 - 2026-02-17
 
 - Added a publish guard to require tag commits be reachable from `origin/main` history.
