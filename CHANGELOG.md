@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added fail-fast handling for npm CIDR/IP-restriction auth errors (`EAUTHIP`, IP/CIDR denial messages) in auth and publish checks.
+
 ## 0.1.43 - 2026-02-17
 
 - Treated npm `E403/forbidden` responses as immediate fatal errors in the token-auth verification step.
