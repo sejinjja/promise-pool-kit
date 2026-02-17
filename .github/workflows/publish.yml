@@ -187,15 +187,15 @@ jobs:
               exit 0
             fi
 
-            if echo "$PUBLISH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|E403|forbidden"; then
-              echo "$PUBLISH_OUTPUT"
-              exit 1
-            fi
-
             PUBLISHED_VERSION="$(npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version 2>/dev/null || true)"
             if [ "$PUBLISHED_VERSION" = "$PACKAGE_VERSION" ]; then
               echo "npm publish command failed, but ${PACKAGE_NAME}@${PACKAGE_VERSION} is already visible on npm."
               exit 0
+            fi
+
+            if echo "$PUBLISH_OUTPUT" | grep -qiE "E401|ENEEDAUTH|E403|forbidden"; then
+              echo "$PUBLISH_OUTPUT"
+              exit 1
             fi
 
             echo "Transient npm publish failure ($i/3), retrying..."

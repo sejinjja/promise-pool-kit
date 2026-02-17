@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Reordered npm publish failure handling to check whether the target version is already visible before treating forbidden/auth errors as fatal.
+
 ## 0.1.36 - 2026-02-17
 
 - Tightened `NPM_TOKEN` validation to fail when whitespace/newline characters are present before npm auth/publish.
