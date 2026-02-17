@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added publish workflow check to require a matching version section in `CHANGELOG.md`.
+- Added npm tarball artifact upload in publish workflow for release traceability.
+
 ## 0.1.4 - 2026-02-17
 
 - Added post-publish npm install/runtime smoke verification in tag publish workflow.

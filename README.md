@@ -125,6 +125,7 @@ npm access list packages <your-npm-id>
 
 For automated tag-based publishing via GitHub Actions, set repository secret `NPM_TOKEN` (granular token with publish permission).
 Tag-based publish also creates a GitHub release for the same tag automatically.
+Tag-based publish requires a matching version entry in `CHANGELOG.md` and uploads the npm tarball as a workflow artifact.
 
 ## License
 
