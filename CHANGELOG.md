@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.49 - 2026-02-17
+
 - Extended `NPM_TOKEN` placeholder detection to catch environment-reference literals like `$NPM_TOKEN` and `%NPM_TOKEN%`.
 
 ## 0.1.48 - 2026-02-17
