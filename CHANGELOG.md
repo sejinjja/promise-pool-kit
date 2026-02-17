@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `NPM_TOKEN` guard to fail when the secret appears to include surrounding quote characters.
+
 ## 0.1.44 - 2026-02-17
 
 - Added fail-fast handling for npm CIDR/IP-restriction auth errors (`EAUTHIP`, IP/CIDR denial messages) in auth and publish checks.

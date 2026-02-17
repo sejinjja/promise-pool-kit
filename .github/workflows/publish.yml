@@ -141,6 +141,10 @@ jobs:
             echo "NPM_TOKEN contains whitespace/newline characters."
             exit 1
           fi
+          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^".*"$|^\x27.*\x27$'; then
+            echo "NPM_TOKEN appears to include surrounding quotes."
+            exit 1
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
