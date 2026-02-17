@@ -32,6 +32,13 @@ const FORBIDDEN_PATTERNS = [
   }
 ];
 
+const WORKFLOW_SECRET_POLICY = {
+  file: ".github/workflows/publish.yml",
+  allowedExplicitNames: new Set([
+    fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 67, 82, 69, 68, 69, 78, 84, 73, 65, 76])
+  ])
+};
+
 const IGNORED_FILES = new Set(["scripts/validate-secret-names.mjs"]);
 
 function fail(message) {
@@ -82,16 +89,39 @@ for (const file of listTrackedFiles()) {
         });
       }
     }
+
+    if (file === WORKFLOW_SECRET_POLICY.file) {
+      for (const match of line.matchAll(/\bsecrets\.([A-Za-z_][A-Za-z0-9_]*)\b/g)) {
+        const referencedName = match[1];
+        if (!WORKFLOW_SECRET_POLICY.allowedExplicitNames.has(referencedName)) {
+          violations.push({
+            file,
+            line: i + 1,
+            label: "unauthorized workflow secret reference",
+            detail: referencedName
+          });
+        }
+      }
+
+      if (/\bsecrets\[/.test(line)) {
+        violations.push({
+          file,
+          line: i + 1,
+          label: "workflow secret indirection reference"
+        });
+      }
+    }
   }
 }
 
 if (violations.length > 0) {
   for (const violation of violations) {
+    const detailSuffix = violation.detail ? ` (${violation.detail})` : "";
     console.error(
-      `${violation.file}:${violation.line} contains forbidden secret alias '${violation.label}'.`
+      `${violation.file}:${violation.line} contains forbidden secret naming pattern '${violation.label}'${detailSuffix}.`
     );
   }
-  fail("remove forbidden secret aliases from repository files");
+  fail("remove forbidden secret naming patterns from repository files");
 }
 
 console.log("SECRET naming validation passed.");
