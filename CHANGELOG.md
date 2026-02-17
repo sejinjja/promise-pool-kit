@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Switched publish workflow npm auth to a generic credential secret with temporary `.npmrc` injection, removing explicit legacy auth-secret naming from workflow definitions.
+
 ## 0.1.58 - 2026-02-17
 
 - Added npm auth/publish error-output redaction in publish workflow to scrub common credential-bearing patterns before logging.
@@ -14,7 +16,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.1.56 - 2026-02-17
 
-- Replaced indirect publish-secret lookup with direct `secrets.NODE_AUTH_TOKEN` binding to remove secret-name exposure through repository variables.
+- Replaced indirect publish-secret lookup with direct publish-credential secret binding to remove secret-name exposure through repository variables.
 
 ## 0.1.55 - 2026-02-17
 

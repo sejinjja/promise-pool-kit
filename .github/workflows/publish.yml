@@ -135,36 +135,36 @@ jobs:
       - name: Verify publish credential is configured
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
         run: |
-          echo "::add-mask::${NODE_AUTH_TOKEN}"
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+          echo "::add-mask::${PUBLISH_CREDENTIAL}"
+          if [ -z "${PUBLISH_CREDENTIAL}" ]; then
             echo "Missing publish credential secret."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -q '[[:space:]]'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -q '[[:space:]]'; then
             echo "Publish credential contains whitespace/newline characters."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^".*"$|^\x27.*\x27$'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qE '^".*"$|^\x27.*\x27$'; then
             echo "Publish credential appears to include surrounding quotes."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^`+.*`+$'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qE '^`+.*`+$'; then
             echo "Publish credential appears to include markdown backticks."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^\$\{\{[^}]+\}\}$'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qE '^\$\{\{[^}]+\}\}$'; then
             echo "Publish credential appears to be an unresolved template expression."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qE '^\$[A-Za-z_][A-Za-z0-9_]*$|^\$\{[A-Za-z_][A-Za-z0-9_]*\}$|^%[A-Za-z_][A-Za-z0-9_]*%$'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qE '^\$[A-Za-z_][A-Za-z0-9_]*$|^\$\{[A-Za-z_][A-Za-z0-9_]*\}$|^%[A-Za-z_][A-Za-z0-9_]*%$'; then
             echo "Publish credential appears to be an unresolved environment-variable reference."
             exit 1
           fi
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qiE '(^//.*:_authtoken=|_authtoken=|registry\.npmjs\.org/)'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qiE '(^//.*:_authtoken=|_authtoken=|registry\.npmjs\.org/)'; then
             echo "Publish credential appears to include an .npmrc auth config line; provide token value only."
             exit 1
           fi
-          TOKEN_LOWER="$(printf "%s" "${NODE_AUTH_TOKEN}" | tr '[:upper:]' '[:lower:]')"
+          TOKEN_LOWER="$(printf "%s" "${PUBLISH_CREDENTIAL}" | tr '[:upper:]' '[:lower:]')"
           if printf "%s" "${TOKEN_LOWER}" | grep -qE '^(ghp_|github_pat_|glpat-|xox[aboprsv]-|ya29\.)'; then
             echo "Publish credential appears to be a non-npm service token."
             exit 1
@@ -175,12 +175,12 @@ jobs:
               exit 1
               ;;
           esac
-          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qiE '^(\*+|redacted|<redacted>|\[redacted\]|\[secure\])$'; then
+          if printf "%s" "${PUBLISH_CREDENTIAL}" | grep -qiE '^(\*+|redacted|<redacted>|\[redacted\]|\[secure\])$'; then
             echo "Publish credential appears to be a masked/redacted placeholder."
             exit 1
           fi
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          PUBLISH_CREDENTIAL: ${{ secrets.PUBLISH_CREDENTIAL }}
 
       - name: Verify publish credential can authenticate
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
@@ -191,6 +191,15 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
+          echo "::add-mask::${PUBLISH_CREDENTIAL}"
+          REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
+          REGISTRY_HOST="${REGISTRY_HOST#http://}"
+          REGISTRY_HOST="${REGISTRY_HOST%/}"
+          TMP_NPMRC="$(mktemp)"
+          trap 'rm -f "$TMP_NPMRC"' EXIT
+          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${PUBLISH_CREDENTIAL}" > "$TMP_NPMRC"
+          chmod 600 "$TMP_NPMRC"
+          export NPM_CONFIG_USERCONFIG="$TMP_NPMRC"
 
           for i in {1..3}; do
             set +e
@@ -216,7 +225,7 @@ jobs:
           echo "Publish credential authentication failed after retries."
           exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          PUBLISH_CREDENTIAL: ${{ secrets.PUBLISH_CREDENTIAL }}
 
       - name: Publish to npm
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
@@ -227,6 +236,15 @@ jobs:
               -e 's#(_auth[Tt]oken=)[^[:space:]]+#\1***REDACTED***#g' \
               -e 's#([Bb]earer[[:space:]]+)[A-Za-z0-9._~=-]+#\1***REDACTED***#g'
           }
+          echo "::add-mask::${PUBLISH_CREDENTIAL}"
+          REGISTRY_HOST="${NPM_REGISTRY_URL#https://}"
+          REGISTRY_HOST="${REGISTRY_HOST#http://}"
+          REGISTRY_HOST="${REGISTRY_HOST%/}"
+          TMP_NPMRC="$(mktemp)"
+          trap 'rm -f "$TMP_NPMRC"' EXIT
+          printf "//%s/:_authToken=%s\n" "${REGISTRY_HOST}" "${PUBLISH_CREDENTIAL}" > "$TMP_NPMRC"
+          chmod 600 "$TMP_NPMRC"
+          export NPM_CONFIG_USERCONFIG="$TMP_NPMRC"
 
           PACKAGE_NAME="$(node -p "require('./package.json').name")"
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
@@ -274,7 +292,7 @@ jobs:
           echo "npm publish failed after retries."
           exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          PUBLISH_CREDENTIAL: ${{ secrets.PUBLISH_CREDENTIAL }}
 
       - name: Verify published package install and runtime
         if: github.event_name == 'push'
