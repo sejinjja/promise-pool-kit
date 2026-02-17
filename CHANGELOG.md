@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.13 - 2026-02-17
+
 - Made tag publish workflow idempotent by skipping `npm publish` when the target version is already on npm.
 
 ## 0.1.12 - 2026-02-17
