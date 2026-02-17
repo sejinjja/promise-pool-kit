@@ -29,6 +29,24 @@ function runInherit(cmd) {
   execSync(cmd, { stdio: "inherit" });
 }
 
+function ensurePushReady() {
+  const branch = run("git branch --show-current");
+  if (branch !== "main") {
+    throw new Error(`--push is only allowed from main branch. Current branch: ${branch}`);
+  }
+
+  runInherit("git fetch origin main --tags");
+  const divergence = run("git rev-list --left-right --count origin/main...HEAD");
+  const [behindRaw] = divergence.split(/\s+/);
+  const behind = Number(behindRaw);
+  if (!Number.isFinite(behind)) {
+    throw new Error(`Unable to parse branch divergence output: ${divergence}`);
+  }
+  if (behind > 0) {
+    throw new Error("Local main is behind origin/main. Pull/rebase before running --push release.");
+  }
+}
+
 function parseSemver(version) {
   const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
   if (!match) {
@@ -128,10 +146,7 @@ function main() {
   }
 
   if (push) {
-    const branch = run("git branch --show-current");
-    if (branch !== "main") {
-      throw new Error(`--push is only allowed from main branch. Current branch: ${branch}`);
-    }
+    ensurePushReady();
   }
 
   const pkg = JSON.parse(readFileSync("package.json", "utf8"));

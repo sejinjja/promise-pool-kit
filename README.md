@@ -139,6 +139,7 @@ node scripts/release.mjs patch --push
 ```
 
 `--push` mode is guarded to run only on the `main` branch.
+`--push` mode also verifies local `main` is not behind `origin/main`.
 
 ## License
 
