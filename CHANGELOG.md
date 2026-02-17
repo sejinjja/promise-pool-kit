@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.59 - 2026-02-17
+
 - Switched publish workflow npm auth to a generic credential secret with temporary `.npmrc` injection, removing explicit legacy auth-secret naming from workflow definitions.
 
 ## 0.1.58 - 2026-02-17
