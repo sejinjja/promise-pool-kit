@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.77 - 2026-02-17
+
 - Generalized restricted secret-name linting to track the workflow allowlist automatically.
 
 ## 0.1.76 - 2026-02-17
