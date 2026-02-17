@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.31 - 2026-02-17
+
 - Scoped npm token checks to run only when publish is required, so reruns for already-published versions do not fail on token auth.
+
 ## 0.1.30 - 2026-02-17
 
 - Added publish workflow auth check to fail fast when `NPM_TOKEN` cannot authenticate (`npm whoami`).

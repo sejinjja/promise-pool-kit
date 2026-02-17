@@ -1,6 +1,6 @@
 {
   "name": "@sejinjja/promise-pool-kit",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "description": "A tiny TypeScript toolkit for retry, timeout, and controlled concurrency in async workloads.",
   "license": "MIT",
   "type": "module",
