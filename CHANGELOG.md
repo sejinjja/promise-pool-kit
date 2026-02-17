@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Expanded `NPM_TOKEN` placeholder checks to fail fast on common null/boolean sentinel values (`null`, `undefined`, `none`, `false`, `true`).
+
 ## 0.1.50 - 2026-02-17
 
 - Added fast-fail detection for obvious non-npm token prefixes in `NPM_TOKEN` (for example `ghp_`, `github_pat_`, `glpat-`).
