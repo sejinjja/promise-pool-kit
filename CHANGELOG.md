@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Made tag publish workflow idempotent by skipping `npm publish` when the target version is already on npm.
+
 ## 0.1.12 - 2026-02-17
 
 - Enabled npm provenance publishing in tag workflow (`npm publish --provenance`).
