@@ -43,6 +43,8 @@ const WORKFLOW_SECRET_POLICY = {
   ])
 };
 
+const WORKFLOW_PATH_REGEX = /^\.github\/workflows\/[^/]+\.ya?ml$/;
+
 const SECRET_NAME_USAGE_POLICY = {
   restrictedNames: [...WORKFLOW_SECRET_POLICY.allowedExplicitNames],
   allowedFiles: new Set([WORKFLOW_SECRET_POLICY.file])
@@ -111,6 +113,16 @@ for (const file of listTrackedFiles()) {
           file,
           line: i + 1,
           label: "workflow secret indirection reference"
+        });
+      }
+    }
+
+    if (WORKFLOW_PATH_REGEX.test(file) && file !== WORKFLOW_SECRET_POLICY.file) {
+      if (/\bsecrets\.[A-Za-z_][A-Za-z0-9_]*\b|\bsecrets\[/.test(line)) {
+        violations.push({
+          file,
+          line: i + 1,
+          label: "workflow secret reference outside approved workflow"
         });
       }
     }
