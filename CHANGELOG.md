@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.37 - 2026-02-17
+
 - Reordered npm publish failure handling to check whether the target version is already visible before treating forbidden/auth errors as fatal.
 
 ## 0.1.36 - 2026-02-17
