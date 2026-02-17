@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Attached the built npm tarball to GitHub Release assets in tag publish workflow (idempotent on reruns).
+
 ## 0.1.13 - 2026-02-17
 
 - Made tag publish workflow idempotent by skipping `npm publish` when the target version is already on npm.
