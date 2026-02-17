@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.74 - 2026-02-17
+
 - Added workflow policy linting to allow only approved publish secret references.
 
 ## 0.1.73 - 2026-02-17
