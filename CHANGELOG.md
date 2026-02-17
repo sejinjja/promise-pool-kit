@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Removed step-level credential env injection in publish workflow and switched to per-step local secret assignment to reduce env block exposure in logs.
+
 ## 0.1.65 - 2026-02-17
 
 - Removed `setup-node` registry injection from publish workflow to minimize workflow-wide auth env/config side effects.
