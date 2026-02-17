@@ -135,6 +135,7 @@ Tag workflow reruns are idempotent: if that exact version is already on npm, pub
 Tag workflow post-publish verification checks the exact target version on npm (not only `latest`).
 Tag workflow also attaches the built npm tarball to the corresponding GitHub Release assets.
 CI workflow cancels superseded runs on the same ref, while publish workflow serializes runs per ref.
+Workflow jobs are timeout-bound to avoid hung runners (`CI`: 15 minutes, `Publish`: 20 minutes).
 
 For local release preparation:
 
