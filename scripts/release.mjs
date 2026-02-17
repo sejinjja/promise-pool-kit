@@ -7,10 +7,11 @@ function usage() {
   console.log(
     [
       "Usage:",
-      "  node scripts/release.mjs [patch|minor|major|<x.y.z>] [--push] [--no-check]",
+      "  node scripts/release.mjs [patch|minor|major|<x.y.z>] [--push] [--no-check] [--dry-run]",
       "",
       "Examples:",
       "  node scripts/release.mjs patch",
+      "  node scripts/release.mjs patch --dry-run",
       "  node scripts/release.mjs minor --push",
       "  node scripts/release.mjs 1.2.3 --push"
     ].join("\n")
@@ -70,7 +71,7 @@ function bumpVersion(current, kind) {
   return `${parsed.major + 1}.0.0`;
 }
 
-function updateChangelog(nextVersion) {
+function prepareChangelogUpdate(nextVersion) {
   const changelogPath = "CHANGELOG.md";
   const changelog = readFileSync(changelogPath, "utf8");
   const eol = changelog.includes("\r\n") ? "\r\n" : "\n";
@@ -122,7 +123,23 @@ function updateChangelog(nextVersion) {
     ...(nextHeadingIndex < 0 ? [] : lines.slice(nextHeadingIndex))
   ];
 
-  writeFileSync(changelogPath, `${rebuilt.join(eol).replace(new RegExp(`${eol}+$`), "")}${eol}`);
+  const bulletCount = unreleasedRaw.filter((line) => line.trim().startsWith("- ")).length;
+
+  return {
+    changelogPath,
+    eol,
+    rebuilt,
+    releaseHeader,
+    promotedLines: unreleasedRaw.length,
+    promotedBullets: bulletCount
+  };
+}
+
+function writeChangelogUpdate(plan) {
+  writeFileSync(
+    plan.changelogPath,
+    `${plan.rebuilt.join(plan.eol).replace(new RegExp(`${plan.eol}+$`), "")}${plan.eol}`
+  );
 }
 
 function main() {
@@ -134,6 +151,7 @@ function main() {
 
   const push = args.includes("--push");
   const noCheck = args.includes("--no-check");
+  const dryRun = args.includes("--dry-run");
   const target = args.find((arg) => !arg.startsWith("--")) ?? "patch";
 
   if (!["patch", "minor", "major"].includes(target) && !/^\d+\.\d+\.\d+$/.test(target)) {
@@ -141,8 +159,11 @@ function main() {
   }
 
   const dirty = run("git status --porcelain");
-  if (dirty.length > 0) {
+  if (dirty.length > 0 && !dryRun) {
     throw new Error("Working tree is not clean. Commit or stash changes before release.");
+  }
+  if (dirty.length > 0 && dryRun) {
+    console.warn("Warning: working tree is not clean. Running preview mode only.");
   }
 
   if (push) {
@@ -165,8 +186,32 @@ function main() {
     throw new Error(`Tag v${nextVersion} already exists.`);
   }
 
+  const changelogPlan = prepareChangelogUpdate(nextVersion);
+
+  if (dryRun) {
+    if (!noCheck) {
+      runInherit("npm run check");
+    }
+
+    console.log(`Dry run: v${nextVersion}`);
+    console.log(`- Current version: ${currentVersion}`);
+    console.log(`- Next version: ${nextVersion}`);
+    console.log(`- Changelog heading: ${changelogPlan.releaseHeader}`);
+    console.log(
+      `- Unreleased entries to promote: ${changelogPlan.promotedBullets || changelogPlan.promotedLines}`
+    );
+    console.log(`- Check step: ${noCheck ? "skipped" : "executed"}`);
+    console.log("- Would update package.json/package-lock.json/CHANGELOG.md");
+    console.log(`- Would create commit: chore(release): v${nextVersion}`);
+    console.log(`- Would create tag: v${nextVersion}`);
+    if (push) {
+      console.log("- Would push: origin/main and origin/v<version>");
+    }
+    return;
+  }
+
   runInherit(`npm version ${nextVersion} --no-git-tag-version`);
-  updateChangelog(nextVersion);
+  writeChangelogUpdate(changelogPlan);
 
   if (!noCheck) {
     runInherit("npm run check");

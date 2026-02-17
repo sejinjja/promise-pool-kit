@@ -136,6 +136,8 @@ npm run release:patch
 # or: npm run release:minor / npm run release:major
 # add --push by running the script directly:
 node scripts/release.mjs patch --push
+# quick preview without file changes:
+npm run release:dry-run
 ```
 
 `--push` mode is guarded to run only on the `main` branch.

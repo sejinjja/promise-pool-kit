@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `--dry-run` mode to `scripts/release.mjs` for non-mutating release previews.
+
 ## 0.1.9 - 2026-02-17
 
 - Hardened `scripts/release.mjs --push` to fail when local `main` is behind `origin/main`.
