@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.39 - 2026-02-17
+
 - Pinned npm registry URL explicitly for publish-state checks, publish, and smoke-install steps in the publish workflow.
 
 ## 0.1.38 - 2026-02-17
