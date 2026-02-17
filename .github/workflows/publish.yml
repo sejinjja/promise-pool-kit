@@ -89,26 +89,6 @@ jobs:
           path: ${{ steps.pack.outputs.tarball }}
           if-no-files-found: error
 
-      - name: Verify npm token is configured
-        if: github.event_name == 'push'
-        run: |
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "Missing NPM_TOKEN secret."
-            exit 1
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Verify npm token can authenticate
-        if: github.event_name == 'push'
-        run: |
-          if ! npm whoami --registry=https://registry.npmjs.org > /dev/null 2>&1; then
-            echo "NPM_TOKEN authentication failed."
-            exit 1
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Detect whether this version is already published
         if: github.event_name == 'push'
         id: npm_state
@@ -123,6 +103,26 @@ jobs:
           else
             echo "already_published=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Verify npm token is configured
+        if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "Missing NPM_TOKEN secret."
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify npm token can authenticate
+        if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
+        run: |
+          if ! npm whoami --registry=https://registry.npmjs.org > /dev/null 2>&1; then
+            echo "NPM_TOKEN authentication failed."
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         if: github.event_name == 'push' && steps.npm_state.outputs.already_published != 'true'
