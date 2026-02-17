@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.68 - 2026-02-17
+
 - Added retry handling to GitHub release creation/upload step in publish workflow to reduce transient API-auth/server flake failures.
 
 ## 0.1.67 - 2026-02-17
