@@ -48,6 +48,32 @@ function ensurePushReady() {
   }
 }
 
+function ensureVersionNotPublished(packageName, version) {
+  const spec = `${packageName}@${version}`;
+
+  let publishedVersion = "";
+  try {
+    publishedVersion = run(`npm view "${spec}" version`);
+  } catch (error) {
+    const stdout = String(error?.stdout ?? "");
+    const stderr = String(error?.stderr ?? "");
+    const output = `${stdout}\n${stderr}`;
+    if (/E404|404 Not Found|is not in this registry/i.test(output)) {
+      return;
+    }
+    throw new Error(
+      `Failed to verify npm availability for ${spec}. Check npm connectivity/permissions and try again.`
+    );
+  }
+
+  if (publishedVersion === version) {
+    throw new Error(`Version ${spec} is already published on npm. Choose a higher version.`);
+  }
+  if (publishedVersion.length > 0) {
+    throw new Error(`Unexpected npm response while checking ${spec}: ${publishedVersion}`);
+  }
+}
+
 function parseSemver(version) {
   const match = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
   if (!match) {
@@ -184,6 +210,10 @@ function main() {
   const existingTag = run(`git tag --list v${nextVersion}`);
   if (existingTag) {
     throw new Error(`Tag v${nextVersion} already exists.`);
+  }
+
+  if (push && !dryRun) {
+    ensureVersionNotPublished(pkg.name, nextVersion);
   }
 
   const changelogPlan = prepareChangelogUpdate(nextVersion);
