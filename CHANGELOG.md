@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added `NPM_TOKEN` validation for masked/redacted placeholder values (for example `***`, `redacted`).
+
 ## 0.1.46 - 2026-02-17
 
 - Added `NPM_TOKEN` placeholder-value guard to fail fast when common dummy strings are configured.

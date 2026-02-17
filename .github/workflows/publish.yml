@@ -151,6 +151,10 @@ jobs:
               exit 1
               ;;
           esac
+          if printf "%s" "${NODE_AUTH_TOKEN}" | grep -qiE '^(\*+|redacted|<redacted>|\[redacted\]|\[secure\])$'; then
+            echo "NPM_TOKEN appears to be a masked/redacted placeholder."
+            exit 1
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
