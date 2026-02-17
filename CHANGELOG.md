@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Added retry logic to npm token auth check in publish workflow (`npm whoami` up to 3 attempts).
 ## 0.1.31 - 2026-02-17
 
 - Scoped npm token checks to run only when publish is required, so reruns for already-published versions do not fail on token auth.
