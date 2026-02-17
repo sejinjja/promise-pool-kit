@@ -29,6 +29,10 @@ const FORBIDDEN_PATTERNS = [
       `\\b${escapeRegExp(fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 83, 69, 67, 82, 69, 84, 95, 78, 65, 77, 69]))}\\b`,
       "gi"
     )
+  },
+  {
+    label: "legacy alias C",
+    regex: new RegExp(`\\b${escapeRegExp(fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 84, 79, 75, 69, 78]))}\\b`, "gi")
   }
 ];
 
@@ -38,8 +42,6 @@ const WORKFLOW_SECRET_POLICY = {
     fromCodes([80, 85, 66, 76, 73, 83, 72, 95, 67, 82, 69, 68, 69, 78, 84, 73, 65, 76])
   ])
 };
-
-const IGNORED_FILES = new Set(["scripts/validate-secret-names.mjs"]);
 
 function fail(message) {
   console.error(`SECRET naming validation failed: ${message}`);
@@ -61,10 +63,6 @@ function isLikelyText(content) {
 const violations = [];
 
 for (const file of listTrackedFiles()) {
-  if (IGNORED_FILES.has(file)) {
-    continue;
-  }
-
   let content;
   try {
     content = readFileSync(file, "utf8");

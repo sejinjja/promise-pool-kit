@@ -194,7 +194,7 @@ jobs:
             exit 1
           fi
           case "${TOKEN_LOWER}" in
-            "publish_token" | "\${publish_token}" | "\$publish_token" | "%publish_token%" | "your_publish_token" | "your-publish-token" | "your_token" | "your-token" | "changeme" | "token" | "<token>" | "<publish_token>" | "null" | "undefined" | "none" | "false" | "true")
+            "your_token" | "your-token" | "credential" | "credential_value" | "your_credential" | "your-credential" | "changeme" | "token" | "<token>" | "<credential>" | "null" | "undefined" | "none" | "false" | "true")
               echo "Publish credential appears to be a placeholder value."
               exit 1
               ;;
