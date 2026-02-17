@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 0.1.43 - 2026-02-17
+
 - Treated npm `E403/forbidden` responses as immediate fatal errors in the token-auth verification step.
 
 ## 0.1.42 - 2026-02-17
